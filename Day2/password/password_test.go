@@ -46,3 +46,48 @@ func TestPassword_ValidatePosLong(t *testing.T) {
 		t.Error("Expected true; got", b)
 	}
 }
+
+func TestPassword_NewValidatePos(t *testing.T) {
+	pwd := Password{
+		Required: "a",
+		Low:      1,
+		High:     3,
+		Password: "abcde",
+	}
+
+	b := pwd.NewValidate()
+
+	if b != true {
+		t.Error("Expected true; got", b)
+	}
+}
+
+func TestPassword_NewValidateNeg(t *testing.T) {
+	pwd := Password{
+		Required: "b",
+		Low:      1,
+		High:     3,
+		Password: "cdefg",
+	}
+
+	b := pwd.NewValidate()
+
+	if b != false {
+		t.Error("Expected false; got", b)
+	}
+}
+
+func TestPassword_NewValidateNegLong(t *testing.T) {
+	pwd := Password{
+		Required: "c",
+		Low:      2,
+		High:     9,
+		Password: "ccccccccc",
+	}
+
+	b := pwd.NewValidate()
+
+	if b != false {
+		t.Error("Expected false; got", b)
+	}
+}

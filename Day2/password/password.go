@@ -26,3 +26,17 @@ func (p Password) Validate() bool {
 	}
 	return count >= p.Low && count <= p.High
 }
+
+func (p Password) NewValidate() bool {
+	counter := 0
+	fi := p.Low - 1
+	si := p.High - 1
+	pws := strings.Split(p.Password, "")
+	if pws[fi] == p.Required {
+		counter ++
+	}
+	if pws[si] == p.Required {
+		counter++
+	}
+	return counter == 1
+}
