@@ -12,12 +12,16 @@ type Solution struct {
 func IntSearch(ns []int, sumV int, numVals int) (Solution, error) {
 	maxV := sumV - ns[0]
 	remainVals := numVals - 1
+	// loop over every value in our []int
 	for _, v := range ns {
+		// no point in searching past here - just return an empty struct and an error
 		if v >= maxV {
 			return Solution{}, errors.New("no solution found")
 		}
 		search := sumV - v
+		// remainVals == 1 if there's no recursion needed because 1 is the constant default
 		if remainVals > 1 {
+			// Recursion and creating a new Solution (instead of trying to modify the returned sol)
 			sol, err := IntSearch(ns, search, remainVals)
 			if err == nil {
 				sv := append(sol.Values, v)
