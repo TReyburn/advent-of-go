@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/TReyburn/advent-of-go/Day1/fileHandler"
+	"github.com/TReyburn/advent-of-go/Day1/intSearch"
 	"log"
 	"sort"
 )
@@ -24,5 +25,10 @@ func main() {
 		log.Fatalln("Error reading file", err)
 	}
 	sort.Ints(intSlice)
-	fmt.Println(intSlice)
+	sol, err := intSearch.IntSearch(intSlice, 2020)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	fmt.Println("Solution: Values:", sol.N1, sol.N2, "Final Multiplied value:", sol.MultVal)
 }

@@ -1,4 +1,4 @@
-package binarySearch
+package intSearch
 
 import (
 	"errors"
