@@ -21,7 +21,7 @@ func (p Password) Validate() bool {
 			count++
 		}
 		if count > 0 && s != p.Required {
-			return count >= p.Low && count <= p.High
+			break
 		}
 	}
 	return count >= p.Low && count <= p.High
