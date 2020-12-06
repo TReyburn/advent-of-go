@@ -11,5 +11,13 @@ func main() {
 	if err != nil {
 		log.Fatalln("Error loading passwords", err)
 	}
-	fmt.Println(pws)
+	counter := 0
+
+	for _, pwd := range pws {
+		b := pwd.Validate()
+		if b == true {
+			counter++
+		}
+	}
+	fmt.Println("Valid passwords:", counter)
 }
