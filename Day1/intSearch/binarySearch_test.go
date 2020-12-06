@@ -9,18 +9,10 @@ func TestIntSearchPos(t *testing.T) {
 	ns := []int{1721, 979, 366, 299, 675, 1456}
 	sort.Ints(ns)
 	sv := 2020
-	res, err := IntSearch(ns, sv)
+	res, err := IntSearch(ns, sv, 2)
 
 	if err != nil {
 		t.Error("Shouldn't have gotten an error", err)
-	}
-
-	if res.N1 != 299 {
-		t.Error("Expected N1Index of 299; got", res.N1)
-	}
-
-	if res.N2 != 1721 {
-		t.Error("Expected N2Index of 1721; got", res.N2)
 	}
 
 	if res.MultVal != int64(514579) {
@@ -32,7 +24,33 @@ func TestIntSearchNeg(t *testing.T) {
 	ns := []int{1721, 979, 366, 299, 675, 1456}
 	sort.Ints(ns)
 	sv := 2021
-	res, err := IntSearch(ns, sv)
+	res, err := IntSearch(ns, sv, 2)
+
+	if err == nil {
+		t.Error("Shouldn have gotten an error; got solution of:", res)
+	}
+}
+
+func TestIntSearchPosRecurse(t *testing.T) {
+	ns := []int{1721, 979, 366, 299, 675, 1456}
+	sort.Ints(ns)
+	sv := 2020
+	res, err := IntSearch(ns, sv, 3)
+
+	if err != nil {
+		t.Error("Shouldn't have gotten an error", err)
+	}
+
+	if res.MultVal != int64(241861950) {
+		t.Error("Expected MultVal of 514579; got", res.MultVal)
+	}
+}
+
+func TestIntSearchNegRecurse(t *testing.T) {
+	ns := []int{1721, 979, 366, 299, 675, 1456}
+	sort.Ints(ns)
+	sv := 2021
+	res, err := IntSearch(ns, sv, 3)
 
 	if err == nil {
 		t.Error("Shouldn have gotten an error; got solution of:", res)

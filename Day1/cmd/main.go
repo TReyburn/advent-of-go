@@ -6,6 +6,7 @@ import (
 	"github.com/TReyburn/advent-of-go/Day1/intSearch"
 	"log"
 	"sort"
+	"strconv"
 )
 
 // Basic algo steps:
@@ -20,15 +21,43 @@ import (
 //		if res != nil found answer
 
 func main() {
-	intSlice, err := fileHandler.LoadFile("assets/input.txt")
+	var filePath string
+	var sumValue string
+	var numCount string
+
+	fmt.Println("Input filepath")
+	_, err := fmt.Scanln(&filePath)
+	if err != nil {
+		log.Fatalln("User input error", err)
+	}
+
+	fmt.Println("What sum value?")
+	_, err = fmt.Scanln(&sumValue)
+	if err != nil {
+		log.Fatalln("User input error", err)
+	}
+	intSumValue, err := strconv.Atoi(sumValue)
+	if err != nil {
+		log.Fatalln("User input error", err)
+	}
+
+	fmt.Println("How many values to sum up?")
+	_, err = fmt.Scanln(&numCount)
+	intNumCount, err := strconv.Atoi(numCount)
+	if err != nil {
+		log.Fatalln("User input error", err)
+	}
+
+
+	intSlice, err := fileHandler.LoadFile(filePath)
 	if err != nil {
 		log.Fatalln("Error reading file", err)
 	}
 	sort.Ints(intSlice)
-	sol, err := intSearch.IntSearch(intSlice, 2020)
+	sol, err := intSearch.IntSearch(intSlice, intSumValue, intNumCount)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	fmt.Println("Solution: Values:", sol.N1, sol.N2, "Final Multiplied value:", sol.MultVal)
+	fmt.Println("Solution: Values:", sol.Values, "Final Multiplied value:", sol.MultVal)
 }

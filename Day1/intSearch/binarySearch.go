@@ -5,21 +5,29 @@ import (
 )
 
 type Solution struct {
-	N1 int
-	N2 int
+	Values []int
 	MultVal int64
 }
 
-func IntSearch(ns []int, sumV int) (Solution, error) {
+func IntSearch(ns []int, sumV int, numVals int) (Solution, error) {
 	maxV := sumV - ns[0]
+	remainVals := numVals - 1
 	for _, v := range ns {
 		if v >= maxV {
 			return Solution{}, errors.New("no solution found")
+		}
+		search := sumV - v
+		if remainVals > 1 {
+			sol, err := IntSearch(ns, search, remainVals)
+			if err == nil {
+				sv := append(sol.Values, v)
+				mv := sol.MultVal * int64(v)
+				return Solution{Values: sv, MultVal: mv}, nil
+			}
 		} else {
-			search := sumV - v
 			b, _ := binarySearch(ns, search)
 			if b == true {
-				return Solution{N1: v, N2: search, MultVal: int64(v * search)}, nil
+				return Solution{Values: []int{v, search}, MultVal: int64(v * search)}, nil
 			}
 		}
 	}
