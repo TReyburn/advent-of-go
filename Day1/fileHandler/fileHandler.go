@@ -12,7 +12,7 @@ func LoadFile(fp string) ([]int, error) {
 	if err != nil {
 		return []int{}, err
 	}
-	res, err := convertBytesToInts(fb)
+	res, err := convertByteSToIntS(fb)
 	if err != nil {
 		return []int{}, err
 	}
@@ -30,7 +30,7 @@ func loadFileBytes(fp string) ([][]byte, error) {
 	return res, nil
 }
 
-func convertBytesToInts(bss [][]byte) ([]int, error) {
+func convertByteSToIntS(bss [][]byte) ([]int, error) {
 	ns := make([]int, 0)
 	// Iterating over [][]byte, converting each []byte to str, converting str to int, and then appending int to []int
 	for _, bString := range bss {
