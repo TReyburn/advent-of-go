@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func LoadFile(fp string) ([]int, error) {
+func LoadDay1File(fp string) ([]int, error) {
 	fb, err := loadFileBytes(fp)
 	if err != nil {
 		return []int{}, err

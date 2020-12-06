@@ -49,7 +49,7 @@ func main() {
 	}
 
 
-	intSlice, err := fileHandler.LoadFile(filePath)
+	intSlice, err := fileHandler.LoadDay1File(filePath)
 	if err != nil {
 		log.Fatalln("Error reading file", err)
 	}
