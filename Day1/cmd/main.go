@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/TReyburn/advent-of-go/Day1/fileHandler"
 	"github.com/TReyburn/advent-of-go/Day1/intSearch"
+	"github.com/TReyburn/advent-of-go/common/fileHandler"
 	"log"
 	"sort"
 	"strconv"
