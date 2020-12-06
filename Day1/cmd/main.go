@@ -18,11 +18,6 @@ import (
 //		res := search([]int, searchV;
 //		if res != nil found answer
 
-type Solution struct {
-	N1index int
-	N2index int
-}
-
 func main() {
 	intSlice, err := fileHandler.LoadFile("assets/input.txt")
 	if err != nil {
