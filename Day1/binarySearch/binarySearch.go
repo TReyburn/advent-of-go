@@ -14,33 +14,21 @@ package binarySearch
 //}
 
 func binarySearch(ns []int, searchV int) (bool, int) {
-	nsLen := len(ns)
-	searchLoc := nsLen/2
-	previousLoc := 0
-	for {
-		foundV := ns[searchLoc]
-		if foundV == searchV {
-			return true, searchLoc
+	high := len(ns) - 1
+	low := 0
+
+	for low <= high {
+		mid := (low + high) / 2
+
+		if ns[mid] == searchV {
+			return true, mid
+		}
+
+		if ns[mid] < searchV {
+			low = mid + 1
 		} else {
-			if foundV < searchV {
-				previousLoc = searchLoc
-				searchLoc = searchLoc + (searchLoc/2)
-				if searchLoc == previousLoc {
-					searchLoc++
-					if searchLoc == nsLen {
-						return false, 0
-					}
-				}
-			} else {
-				previousLoc = searchLoc
-				searchLoc = searchLoc - (searchLoc/2)
-				if searchLoc == previousLoc {
-					searchLoc--
-					if searchLoc < 0 {
-						return false, 0
-					}
-				}
-			}
+			high = mid - 1
 		}
 	}
+	return false, 0
 }
