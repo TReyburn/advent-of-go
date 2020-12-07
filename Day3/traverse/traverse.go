@@ -21,3 +21,14 @@ func Traverse(tm []string, search string, xInc int, yInc int) int {
 	}
 	return count
 }
+
+func MultiTraverse(tm []string, search string, angles [][]int) int {
+	total := 1
+	for _, angleSet := range angles {
+		xInc := angleSet[0]
+		yInc := angleSet[1]
+		res := Traverse(tm, search, xInc, yInc)
+		total *= res
+	}
+	return total
+}

@@ -16,6 +16,21 @@ var testData = []string{
 	".#..#...#.#",
 }
 
+func TestMultiTraverse(t *testing.T) {
+	angles := [][]int{
+		[]int{1,1},
+		[]int{1,3},
+		[]int{1,5},
+		[]int{1,7},
+		[]int{2,1},
+	}
+	res := MultiTraverse(testData, "#", angles)
+
+	if res != 336 {
+		t.Error("Expected result of 336; got", res)
+	}
+}
+
 func TestDumbTraverseCase1(t *testing.T) {
 	count := Traverse(testData, "#", 1, 3)
 
