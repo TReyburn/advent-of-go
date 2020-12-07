@@ -3,8 +3,9 @@ package filehandler
 import (
 	"bytes"
 	"github.com/TReyburn/advent-of-go/Day2/password"
-	"github.com/TReyburn/advent-of-go/Day4/passport"
+	"io"
 	"io/ioutil"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -42,12 +43,13 @@ func LoadDay3File(fp string) ([]string, error) {
 	return res, nil
 }
 
-func LoadDay4File(fp string) ([]passport.Passport, error) {
-	_, err := loadFileBytes(fp)
+func LoadInputFile(fp string, writer io.Writer) error {
+	f, err := os.Open(fp)
 	if err != nil {
-		return []passport.Passport{}, err
+		return err
 	}
-	return []passport.Passport{}, nil
+	_, err = io.Copy(writer, f)
+	return err
 }
 
 func loadFileBytes(fp string) ([][]byte, error) {
