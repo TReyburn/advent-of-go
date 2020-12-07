@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/TReyburn/advent-of-go/Day3/traverse"
 	"github.com/TReyburn/advent-of-go/common/fileHandler"
 	"log"
 )
@@ -11,5 +12,6 @@ func main() {
 	if err != nil {
 		log.Fatalln("Error opening file", err)
 	}
-	fmt.Println(data)
+	res := traverse.DumbTraverse(data, "#", 1, 3)
+	fmt.Println("We hit", res, "trees")
 }
