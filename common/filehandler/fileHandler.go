@@ -1,12 +1,16 @@
-package fileHandler
+package filehandler
 
 import (
 	"bytes"
 	"github.com/TReyburn/advent-of-go/Day2/password"
+	"github.com/TReyburn/advent-of-go/Day4/passport"
 	"io/ioutil"
 	"strconv"
 	"strings"
 )
+
+// I should refactor LoadFile to take in a Reader/Writer interface - then I can refactor all of these LoadDayXFile funcs
+//	into a single function
 
 func LoadDay1File(fp string) ([]int, error) {
 	fb, err := loadFileBytes(fp)
@@ -36,6 +40,14 @@ func LoadDay3File(fp string) ([]string, error) {
 	}
 	res := convertByteSToStringS(fb)
 	return res, nil
+}
+
+func LoadDay4File(fp string) ([]passport.Passport, error) {
+	_, err := loadFileBytes(fp)
+	if err != nil {
+		return []passport.Passport{}, err
+	}
+	return []passport.Passport{}, nil
 }
 
 func loadFileBytes(fp string) ([][]byte, error) {
