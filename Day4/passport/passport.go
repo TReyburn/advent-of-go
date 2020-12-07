@@ -9,26 +9,29 @@ type Passport struct {
 	Content map[string]string
 }
 
-func (pp *Passport) AddContent(k string, v string) {
+func (pp *Passport) addContent(k string, v string) {
 	pp.Content[k] = v
 }
 
-func (pp *Passport) LoadStringValues(v string) {
+func (pp *Passport) loadStringValues(v string) {
 	split := strings.Split(v, " ")
 	for _, pair := range split {
 		kv := strings.Split(pair, ":")
-		pp.AddContent(kv[0], kv[1])
+		pp.addContent(kv[0], kv[1])
 	}
 }
 
-func (pp Passport) Validate(req []string) bool {
+func (pp *Passport) Validate(req []string) bool {
 	count := 0
+	missed := 0
 	for _, required := range req {
 		if _, ok := pp.Content[required]; ok {
 			count++
+		} else if required != "cid" {
+			missed++
 		}
 	}
-	return count == len(req)
+	return missed == 0
 }
 
 type PassportsScanner struct {
@@ -44,7 +47,7 @@ func (ps *PassportsScanner) Write(p []byte) (n int, err error) {
 		rawString := string(bString)
 		rawString = strings.Trim(rawString, "\n")
 		if rawString != "" {
-			pp.LoadStringValues(rawString)
+			pp.loadStringValues(rawString)
 		} else {
 			ps.Passports = append(ps.Passports, *pp)
 			pp = NewPassport()
