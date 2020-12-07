@@ -21,7 +21,7 @@ func (pp *Passport) loadStringValues(v string) {
 	}
 }
 
-func (pp *Passport) Validate(req []string) bool {
+func (pp Passport) Validate(req []string) bool {
 	count := 0
 	missed := 0
 	for _, required := range req {
@@ -36,6 +36,18 @@ func (pp *Passport) Validate(req []string) bool {
 
 type PassportsScanner struct {
 	Passports []Passport
+}
+
+func (ps PassportsScanner) ValidatePassports(req []string) int {
+	vc := 0
+
+	for _, pp := range ps.Passports {
+		res := pp.Validate(req)
+		if res == true {
+			vc++
+		}
+	}
+	return vc
 }
 
 func (ps *PassportsScanner) Write(p []byte) (n int, err error) {
@@ -53,6 +65,7 @@ func (ps *PassportsScanner) Write(p []byte) (n int, err error) {
 			pp = NewPassport()
 		}
 	}
+	ps.Passports = append(ps.Passports, *pp)
 	return rb, nil
 }
 
