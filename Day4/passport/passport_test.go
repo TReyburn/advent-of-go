@@ -1,6 +1,7 @@
 package passport
 
 import (
+	"github.com/TReyburn/advent-of-go/common/filehandler"
 	"testing"
 )
 
@@ -81,5 +82,31 @@ func TestPassport_ValidateCase4(t *testing.T) {
 
 	if res != false {
 		t.Error("Case 4 Validation passed but should have failed")
+	}
+}
+
+func TestPassportsScanner_ValidatePassports(t *testing.T) {
+	ps := NewPassportScanner()
+	err := filehandler.LoadInputFile("testdata/input.txt", ps)
+	if err != nil {
+		t.Error("Unexpected error reading file:", err)
+	}
+
+	res := ps.ValidatePassports(required)
+	if res != 2 {
+		t.Error("Expected 2 valid; got", res)
+	}
+}
+
+func TestPassportsScanner_Write(t *testing.T) {
+	ps := NewPassportScanner()
+	err := filehandler.LoadInputFile("testdata/input.txt", ps)
+	if err != nil {
+		t.Error("Unexpected error reading file:", err)
+	}
+
+	l := len(ps.Passports)
+	if l != 4 {
+		t.Error("Expected 4 passports; got", l)
 	}
 }
