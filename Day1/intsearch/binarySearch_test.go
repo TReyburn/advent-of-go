@@ -1,4 +1,4 @@
-package intSearch
+package intsearch
 
 import (
 	"sort"

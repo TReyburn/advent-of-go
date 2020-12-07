@@ -1,4 +1,4 @@
-package intSearch
+package intsearch
 
 import (
 	"errors"
@@ -30,7 +30,7 @@ func IntSearch(ns []int, sumV int, numVals int) (Solution, error) {
 			}
 		} else {
 			b, _ := binarySearch(ns, search)
-			if b == true {
+			if b {
 				return Solution{Values: []int{v, search}, MultVal: int64(v * search)}, nil
 			}
 		}

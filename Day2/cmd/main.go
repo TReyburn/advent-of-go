@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/TReyburn/advent-of-go/common/fileHandler"
+	"github.com/TReyburn/advent-of-go/common/filehandler"
 	"log"
 )
 
 func main() {
-	pws, err := fileHandler.LoadDay2File("assets/input.txt")
+	pws, err := filehandler.LoadDay2File("assets/input.txt")
 	if err != nil {
 		log.Fatalln("Error loading passwords", err)
 	}

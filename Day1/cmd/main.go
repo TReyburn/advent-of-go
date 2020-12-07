@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/TReyburn/advent-of-go/Day1/intSearch"
-	"github.com/TReyburn/advent-of-go/common/fileHandler"
+	"github.com/TReyburn/advent-of-go/Day1/intsearch"
+	"github.com/TReyburn/advent-of-go/common/filehandler"
 	"log"
 	"sort"
 	"strconv"
@@ -49,12 +49,12 @@ func main() {
 	}
 
 
-	intSlice, err := fileHandler.LoadDay1File(filePath)
+	intSlice, err := filehandler.LoadDay1File(filePath)
 	if err != nil {
 		log.Fatalln("Error reading file", err)
 	}
 	sort.Ints(intSlice)
-	sol, err := intSearch.IntSearch(intSlice, intSumValue, intNumCount)
+	sol, err := intsearch.IntSearch(intSlice, intSumValue, intNumCount)
 	if err != nil {
 		log.Fatalln(err)
 	}
