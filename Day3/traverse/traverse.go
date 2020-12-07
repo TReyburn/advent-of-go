@@ -1,6 +1,6 @@
 package traverse
 
-func DumbTraverse(tm []string, search string, xInc int, yInc int) int {
+func Traverse(tm []string, search string, xInc int, yInc int) int {
 	xLoc := 0
 	yLoc := 0
 	xLen := len(tm)

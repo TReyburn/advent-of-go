@@ -12,6 +12,6 @@ func main() {
 	if err != nil {
 		log.Fatalln("Error opening file", err)
 	}
-	res := traverse.DumbTraverse(data, "#", 1, 3)
+	res := traverse.Traverse(data, "#", 1, 3)
 	fmt.Println("We hit", res, "trees")
 }
