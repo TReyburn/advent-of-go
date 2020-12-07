@@ -29,10 +29,10 @@ func LoadDay2File(fp string) ([]password.Password, error) {
 	return pws, err
 }
 
-func LoadDay3File(fp string) ([][]string, error) {
+func LoadDay3File(fp string) ([]string, error) {
 	fb, err := loadFileBytes(fp)
 	if err != nil {
-		return [][]string{}, err
+		return []string{}, err
 	}
 	res := convertByteSToStringS(fb)
 	return res, nil
@@ -93,13 +93,12 @@ func convertByteStoPasswordS(bss [][]byte) ([]password.Password, error) {
 	return pws, nil
 }
 
-func convertByteSToStringS (bss [][]byte) [][]string {
-	res := make([][]string, 0)
+func convertByteSToStringS (bss [][]byte) []string {
+	res := make([]string, 0)
 	for _, bString := range bss {
 		rawString := string(bString)
 		rawString = strings.Trim(rawString, "\n")
-		strSlice := strings.Split(rawString, "")
-		res = append(res, strSlice)
+		res = append(res, rawString)
 	}
 	return res
 }
