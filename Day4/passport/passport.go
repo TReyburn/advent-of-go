@@ -2,7 +2,6 @@ package passport
 
 import (
 	"bytes"
-	"fmt"
 	"strings"
 )
 
@@ -30,12 +29,11 @@ type PassportsScanner struct {
 
 func (ps *PassportsScanner) Write(p []byte) (n int, err error) {
 	bss := bytes.Split(p, []byte{13})
-	pp := Passport{Content: make(map[string]string, 0)}
+	pp := Passport{Content: make(map[string]string)}
 	rb := len(p)
 
 	for _, bString := range bss {
 		rawString := string(bString)
-		fmt.Println("RawString:", rawString)
 		rawString = strings.Trim(rawString, "\n")
 		if rawString != "" {
 			splitS := strings.Split(rawString, " ")
@@ -45,7 +43,7 @@ func (ps *PassportsScanner) Write(p []byte) (n int, err error) {
 			}
 		} else {
 			ps.Passports = append(ps.Passports, pp)
-			pp = Passport{Content: make(map[string]string, 0)}
+			pp = Passport{Content: make(map[string]string)}
 		}
 	}
 	return rb, nil
