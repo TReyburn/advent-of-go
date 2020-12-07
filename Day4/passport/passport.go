@@ -29,7 +29,7 @@ type PassportsScanner struct {
 
 func (ps *PassportsScanner) Write(p []byte) (n int, err error) {
 	bss := bytes.Split(p, []byte{13})
-	pp := Passport{Content: make(map[string]string)}
+	pp := NewPassport()
 	rb := len(p)
 
 	for _, bString := range bss {
@@ -43,7 +43,7 @@ func (ps *PassportsScanner) Write(p []byte) (n int, err error) {
 			}
 		} else {
 			ps.Passports = append(ps.Passports, pp)
-			pp = Passport{Content: make(map[string]string)}
+			pp = NewPassport()
 		}
 	}
 	return rb, nil
@@ -52,4 +52,9 @@ func (ps *PassportsScanner) Write(p []byte) (n int, err error) {
 func NewPassportScanner() *PassportsScanner {
 	ps := PassportsScanner{}
 	return &ps
+}
+
+func NewPassport() Passport {
+	pp := Passport{Content: make(map[string]string)}
+	return pp
 }
