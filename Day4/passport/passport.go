@@ -42,7 +42,7 @@ func (ps *PassportsScanner) Write(p []byte) (n int, err error) {
 				pp.AddContent(kv[0], kv[1])
 			}
 		} else {
-			ps.Passports = append(ps.Passports, pp)
+			ps.Passports = append(ps.Passports, *pp)
 			pp = NewPassport()
 		}
 	}
@@ -54,7 +54,7 @@ func NewPassportScanner() *PassportsScanner {
 	return &ps
 }
 
-func NewPassport() Passport {
+func NewPassport() *Passport {
 	pp := Passport{Content: make(map[string]string)}
-	return pp
+	return &pp
 }
