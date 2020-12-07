@@ -13,6 +13,14 @@ func (pp *Passport) AddContent(k string, v string) {
 	pp.Content[k] = v
 }
 
+func (pp *Passport) LoadStringValues(v string) {
+	split := strings.Split(v, " ")
+	for _, pair := range split {
+		kv := strings.Split(pair, ":")
+		pp.AddContent(kv[0], kv[1])
+	}
+}
+
 func (pp Passport) Validate(req []string) bool {
 	count := 0
 	for _, required := range req {
@@ -36,11 +44,7 @@ func (ps *PassportsScanner) Write(p []byte) (n int, err error) {
 		rawString := string(bString)
 		rawString = strings.Trim(rawString, "\n")
 		if rawString != "" {
-			splitS := strings.Split(rawString, " ")
-			for _, pair := range splitS {
-				kv := strings.Split(pair, ":")
-				pp.AddContent(kv[0], kv[1])
-			}
+			pp.LoadStringValues(rawString)
 		} else {
 			ps.Passports = append(ps.Passports, *pp)
 			pp = NewPassport()
