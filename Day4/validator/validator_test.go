@@ -235,3 +235,17 @@ func TestPidValidateNeg2(t *testing.T) {
 		t.Error("Failed to invalidate pid:0123a56789")
 	}
 }
+
+func TestNewValidator(t *testing.T) {
+	v := NewValidator()
+	f := v.Validators["cid"]
+	res, err := f("")
+
+	if err != nil {
+		t.Error("Unexpected err", err)
+	}
+
+	if res != true {
+		t.Error("Expected true; got", res)
+	}
+}

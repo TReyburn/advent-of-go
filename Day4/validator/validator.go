@@ -10,7 +10,7 @@ type Validator struct {
 	Validators map[string]func(string)(bool, error)
 }
 
-func (v *Validator) LoadValidators() {
+func (v *Validator) loadValidators() {
 	v.Validators["bry"] = byrValidate
 	v.Validators["iyr"] = iyrValidate
 	v.Validators["eyr"] = eyrValidate
@@ -23,7 +23,7 @@ func (v *Validator) LoadValidators() {
 
 func NewValidator() *Validator {
 	v := Validator{Validators: make(map[string]func(string)(bool, error))}
-	v.LoadValidators()
+	v.loadValidators()
 	return &v
 }
 
