@@ -53,3 +53,120 @@ func TestIyrValidateMeh(t *testing.T) {
 		t.Error("Failed to invalidate iyr:2009")
 	}
 }
+
+func TestEyrValidatePos(t *testing.T) {
+	v := "2020"
+
+	res, err := eyrValidate(v)
+	if err != nil {
+		t.Error("Unexpected error", err)
+	}
+
+	if res != true {
+		t.Error("Failed to validate eyr:2020")
+	}
+}
+
+func TestEyrValidateMeh(t *testing.T) {
+	iv := "2031"
+
+	res, err := eyrValidate(iv)
+	if err != nil {
+		t.Error("Unexpected error", err)
+	}
+
+	if res != false {
+		t.Error("Failed to invalidate eyr:2031")
+	}
+}
+
+func TestHgtValidatePosIN(t *testing.T) {
+	v := "60in"
+
+	res, err := hgtValidate(v)
+	if err != nil {
+		t.Error("Unexpected error", err)
+	}
+
+	if res != true {
+		t.Error("Failed to validate hgt:60in")
+	}
+}
+
+func TestHgtValidateNegIN(t *testing.T) {
+	iv := "190in"
+
+	res, err := hgtValidate(iv)
+	if err != nil {
+		t.Error("Unexpected error", err)
+	}
+
+	if res != false {
+		t.Error("Failed to invalidate hgt:190in")
+	}
+}
+
+func TestHgtValidatePosCM(t *testing.T) {
+	v := "190cm"
+
+	res, err := hgtValidate(v)
+	if err != nil {
+		t.Error("Unexpected error", err)
+	}
+
+	if res != true {
+		t.Error("Failed to validate hgt:190cm")
+	}
+}
+
+func TestHgtValidateNeg(t *testing.T) {
+	iv := "190"
+
+	res, err := hgtValidate(iv)
+	if err != nil {
+		t.Error("Unexpected error", err)
+	}
+
+	if res != false {
+		t.Error("Failed to validate hgt:190")
+	}
+}
+
+func TestHclValidatePos(t *testing.T) {
+	v := "#123abc"
+
+	res, err := hclValidate(v)
+	if err != nil {
+		t.Error("Unexpected error", err)
+	}
+
+	if res != true {
+		t.Error("Failed to validate hcl:#123abc")
+	}
+}
+
+func TestHclValidateNeg1(t *testing.T) {
+	iv := "#123abz"
+
+	res, err := hclValidate(iv)
+	if err != nil {
+		t.Error("Unexpected error", err)
+	}
+
+	if res != false {
+		t.Error("Failed to invalidate hcl:#123abz")
+	}
+}
+
+func TestHclValidateNeg2(t *testing.T) {
+	iv := "123abc"
+
+	res, err := hclValidate(iv)
+	if err != nil {
+		t.Error("Unexpected error", err)
+	}
+
+	if res != false {
+		t.Error("Failed to invalidate hcl:123abc")
+	}
+}
