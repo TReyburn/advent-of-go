@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	ng := &traverse.NotAGraph{Data: make([]string, 0)}
+	ng := traverse.NewGraph()
 	err := filehandler.LoadInputFile("assets/input.txt", ng)
 	if err != nil {
 		log.Fatalln("Error opening file", err)

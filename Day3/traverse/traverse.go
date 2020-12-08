@@ -20,6 +20,11 @@ func (ng *NotAGraph) Write(p []byte) (int, error) {
 	return rb, nil
 }
 
+func NewGraph() *NotAGraph {
+	ng := NotAGraph{Data: make([]string, 0)}
+	return &ng
+}
+
 func Traverse(tm []string, search string, xInc int, yInc int) int {
 	xLoc := 0
 	yLoc := 0
