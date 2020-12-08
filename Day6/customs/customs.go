@@ -54,6 +54,7 @@ func (vs *VisaScanner) Write(p []byte) (int, error) {
 			gv = NewGroupVisa()
 		}
 	}
+	vs.LoadVisa(*gv)
 	return rb, nil
 }
 
