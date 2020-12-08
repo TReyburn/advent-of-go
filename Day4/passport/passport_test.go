@@ -156,46 +156,46 @@ func TestPassport_ValidateDataPos4(t *testing.T) {
 	}
 }
 
-//func TestPassport_ValidateDataNeg1(t *testing.T) {
-//	v := validator.NewValidator()
-//	pp := NewPassport()
-//	pp.loadStringValues("eyr:1972 cid:100 hcl:#18171d ecl:amb hgt:170 pid:186cm iyr:2018 byr:1926")
-//	res := pp.ValidateData(*v)
-//
-//	if res != false {
-//		t.Error("Case 1 - expected false; got", res)
-//	}
-//}
-//
-//func TestPassport_ValidateDataNeg2(t *testing.T) {
-//	v := validator.NewValidator()
-//	pp := NewPassport()
-//	pp.loadStringValues("iyr:2019 hcl:#602927 eyr:1967 hgt:170cm ecl:grn pid:012533040 byr:1946")
-//	res := pp.ValidateData(*v)
-//
-//	if res != false {
-//		t.Error("Case 2 - expected false; got", res)
-//	}
-//}
-//
-//func TestPassport_ValidateDataNeg3(t *testing.T) {
-//	v := validator.NewValidator()
-//	pp := NewPassport()
-//	pp.loadStringValues("hcl:dab227 iyr:2012 ecl:brn hgt:182cm pid:021572410 eyr:2020 byr:1992 cid:277")
-//	res := pp.ValidateData(*v)
-//
-//	if res != false {
-//		t.Error("Case 3 - expected false; got", res)
-//	}
-//}
-//
-//func TestPassport_ValidateDataNeg4(t *testing.T) {
-//	v := validator.NewValidator()
-//	pp := NewPassport()
-//	pp.loadStringValues("hgt:59cm ecl:zzz eyr:2038 hcl:74454a iyr:2023 pid:3556412378 byr:2007")
-//	res := pp.ValidateData(*v)
-//
-//	if res != false {
-//		t.Error("Case 4 - expected false; got", res)
-//	}
-//}
+func TestPassport_ValidateDataNeg1(t *testing.T) {
+	v := validator.NewValidator()
+	pp := NewPassport()
+	pp.loadStringValues("eyr:1972 cid:100 hcl:#18171d ecl:amb hgt:170 pid:186cm iyr:2018 byr:1926")
+	res := pp.ValidateData(*v)
+
+	if res != false {
+		t.Error("Case 1 - expected false; got", res)
+	}
+}
+
+func TestPassport_ValidateDataNeg2(t *testing.T) {
+	v := validator.NewValidator()
+	pp := NewPassport()
+	pp.loadStringValues("iyr:2019 hcl:#602927 eyr:1967 hgt:170cm ecl:grn pid:012533040 byr:1946")
+	res := pp.ValidateData(*v)
+
+	if res != false {
+		t.Error("Case 2 - expected false; got", res)
+	}
+}
+
+func TestPassport_ValidateDataNeg3(t *testing.T) {
+	v := validator.NewValidator()
+	pp := NewPassport()
+	pp.loadStringValues("hcl:dab227 iyr:2012 ecl:brn hgt:182cm pid:021572410 eyr:2020 byr:1992 cid:277")
+	res := pp.ValidateData(*v)
+
+	if res != false {
+		t.Error("Case 3 - expected false; got", res)
+	}
+}
+
+func TestPassport_ValidateDataNeg4(t *testing.T) {
+	v := validator.NewValidator()
+	pp := NewPassport()
+	pp.loadStringValues("hgt:59cm ecl:zzz eyr:2038 hcl:74454a iyr:2023 pid:3556412378 byr:2007")
+	res := pp.ValidateData(*v)
+
+	if res != false {
+		t.Error("Case 4 - expected false; got", res)
+	}
+}
