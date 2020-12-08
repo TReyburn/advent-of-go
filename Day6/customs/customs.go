@@ -23,6 +23,16 @@ func (v GroupVisa) SumUnique() int {
 	return len(v.Data)
 }
 
+func (v GroupVisa) SumCommon() int {
+	common := 0
+	for _, val := range v.Data {
+		if val == len(v.Data) {
+			common++
+		}
+	}
+	return common
+}
+
 func NewGroupVisa() *GroupVisa {
 	v := GroupVisa{Data: make(map[string]int)}
 	return &v
@@ -36,7 +46,7 @@ func (vs *VisaScanner) LoadVisa(gv GroupVisa) {
 	vs.Visas = append(vs.Visas, gv)
 }
 
-func (vs VisaScanner) SumVisas() int {
+func (vs VisaScanner) SumVisasUnique() int {
 	sum := 0
 	for _, gv := range vs.Visas {
 		sum += gv.SumUnique()
