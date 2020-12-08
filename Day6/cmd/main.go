@@ -13,5 +13,5 @@ func main() {
 	if err != nil {
 		log.Fatalln("Unexpected error loading file:", err)
 	}
-	fmt.Println("SumUnique of Visa counts (old):", vs.SumVisas())
+	fmt.Println("SumUnique of Visa counts (old):", vs.SumVisasUnique())
 }

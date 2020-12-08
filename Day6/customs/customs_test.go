@@ -15,7 +15,7 @@ func TestGroupVisa_Load(t *testing.T) {
 	}
 }
 
-func TestGroupVisa_SumCase1(t *testing.T) {
+func TestGroupVisa_SumUniqueCase1(t *testing.T) {
 	gv := NewGroupVisa()
 	str := "abc"
 
@@ -26,7 +26,7 @@ func TestGroupVisa_SumCase1(t *testing.T) {
 	}
 }
 
-func TestGroupVisa_SumCase2(t *testing.T) {
+func TestGroupVisa_SumUniqueCase2(t *testing.T) {
 	gv := NewGroupVisa()
 	str := "aaa"
 
@@ -47,7 +47,7 @@ func TestVisaScanner_SumVisas(t *testing.T) {
 		gv = NewGroupVisa()
 	}
 
-	if vs.SumVisas() != 11 {
-		t.Error("Expected 11; got", vs.SumVisas())
+	if vs.SumVisasUnique() != 11 {
+		t.Error("Expected 11; got", vs.SumVisasUnique())
 	}
 }
