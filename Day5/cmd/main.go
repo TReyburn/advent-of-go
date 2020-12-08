@@ -15,4 +15,10 @@ func main() {
 	}
 	bpm.DecodeAll()
 	fmt.Println("Max ID:", bpm.GetMaxID())
+
+	seat, err := bpm.FindMissingSeat()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	fmt.Println("Our seatID:", seat)
 }

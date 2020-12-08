@@ -2,6 +2,8 @@ package boardingpass
 
 import (
 	"bytes"
+	"errors"
+	"sort"
 	"strings"
 )
 
@@ -23,6 +25,26 @@ func (bpm *BPManager) DecodeAll() {
 	for _, bp := range bpm.Passes {
 		bp.Decode()
 	}
+}
+
+func (bpm BPManager) FindMissingSeat() (int, error) {
+	prevSeat := 0
+	currSeat := 0
+
+	idSlice := make([]int, 0)
+	for _, bp := range bpm.Passes {
+		idSlice = append(idSlice, bp.ID)
+	}
+	sort.Ints(idSlice)
+
+	for _, seatID := range idSlice {
+		currSeat = seatID
+		if currSeat - prevSeat > 1 && prevSeat != 0 {
+			return currSeat - 1, nil
+		}
+		prevSeat = currSeat
+	}
+	return 0, errors.New("could not find seat")
 }
 
 func (bpm *BPManager) Write(p []byte) (int, error) {
