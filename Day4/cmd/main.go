@@ -15,6 +15,7 @@ func main() {
 	if err != nil {
 		log.Fatalln("Error reading file:", err)
 	}
+
 	res := ps.ValidatePassports(required)
 	fmt.Println("Valid Passports with just field validation", res)
 
