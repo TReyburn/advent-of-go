@@ -2,6 +2,7 @@ package passport
 
 import (
 	"bytes"
+	"github.com/TReyburn/advent-of-go/Day4/validator"
 	"strings"
 )
 
@@ -34,6 +35,26 @@ func (pp Passport) Validate(req []string) bool {
 	return missed == 0
 }
 
+func (pp Passport) ValidateData(v validator.Validator) bool {
+	vm := v.Validators
+	invalid := 0
+	missed := 0
+	for key, fnc := range vm {
+		if val, ok := pp.Content[key]; ok {
+			res, err := fnc(val)
+			if err != nil {
+				invalid++
+			}
+			if !res {
+				invalid++
+			}
+		} else if key != "cid" {
+			missed++
+		}
+	}
+	return missed == 0 && invalid == 0
+}
+
 type PassportsScanner struct {
 	Passports []Passport
 }
@@ -43,7 +64,7 @@ func (ps PassportsScanner) ValidatePassports(req []string) int {
 
 	for _, pp := range ps.Passports {
 		res := pp.Validate(req)
-		if res == true {
+		if res {
 			vc++
 		}
 	}
