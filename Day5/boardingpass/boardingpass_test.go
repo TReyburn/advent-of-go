@@ -76,3 +76,19 @@ func TestBoardingPass_DecodeCase3(t *testing.T) {
 		t.Error("Expected id 820; got", bp.ID)
 	}
 }
+
+func TestBPManager_MaxId(t *testing.T) {
+	bpm := NewBoardingPassManager()
+	bp1 := BoardingPass{Code: "BFFFBBFRRR"}
+	bp2 := BoardingPass{Code: "FFFBBBFRRR"}
+	bp3 := BoardingPass{Code: "BBFFBBFRLL"}
+	bpm.Passes = append(bpm.Passes, &bp1)
+	bpm.Passes = append(bpm.Passes, &bp2)
+	bpm.Passes = append(bpm.Passes, &bp3)
+	bpm.DecodeAll()
+	res := bpm.MaxID()
+
+	if res != 820 {
+		t.Error("Expected max ID of 820; got", res)
+	}
+}

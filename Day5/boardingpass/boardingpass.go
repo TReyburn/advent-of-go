@@ -6,7 +6,23 @@ import (
 )
 
 type BPManager struct {
-	Passes []BoardingPass
+	Passes []*BoardingPass
+}
+
+func (bpm BPManager) MaxID() int {
+	max := 0
+	for _, bp := range bpm.Passes {
+		if bp.ID > max {
+			max = bp.ID
+		}
+	}
+	return max
+}
+
+func (bpm *BPManager) DecodeAll() {
+	for _, bp := range bpm.Passes {
+		bp.Decode()
+	}
 }
 
 func (bpm *BPManager) Write(p []byte) (int, error) {
@@ -18,13 +34,13 @@ func (bpm *BPManager) Write(p []byte) (int, error) {
 		bp := BoardingPass{
 			Code: rawString,
 		}
-		bpm.Passes = append(bpm.Passes, bp)
+		bpm.Passes = append(bpm.Passes, &bp)
 	}
 	return rb, nil
 }
 
 func NewBoardingPassManager() *BPManager {
-	bpm := BPManager{Passes: make([]BoardingPass, 0)}
+	bpm := BPManager{Passes: make([]*BoardingPass, 0)}
 	return &bpm
 }
 
