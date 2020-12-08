@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/TReyburn/advent-of-go/Day4/passport"
+	"github.com/TReyburn/advent-of-go/Day4/validator"
 	"github.com/TReyburn/advent-of-go/common/filehandler"
 	"log"
 )
@@ -15,5 +16,9 @@ func main() {
 		log.Fatalln("Error reading file:", err)
 	}
 	res := ps.ValidatePassports(required)
-	fmt.Println(res)
+	fmt.Println("Valid Passports with just field validation", res)
+
+	v := validator.NewValidator()
+	dres := ps.ValidatePassportsData(*v)
+	fmt.Println("Valid Passports with data validation", dres)
 }
