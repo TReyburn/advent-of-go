@@ -34,3 +34,27 @@ type BoardingPass struct {
 	Column int
 	ID int
 }
+
+func (bp *BoardingPass) Decode() {
+
+}
+
+func parseRow(cs string) int {
+	low := 0
+	high := 127
+	css := strings.Split(cs, "")
+	mid := 0
+
+	for _, c := range css {
+		mid = (low + high) / 2
+		if low == high {
+			return mid
+		}
+		if c == "F" {
+			high = mid - 1
+		} else {
+			low = mid + 1
+		}
+	}
+	return mid
+}
