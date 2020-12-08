@@ -51,3 +51,44 @@ func TestVisaScanner_SumVisasUniqueVisas(t *testing.T) {
 		t.Error("Expected 11; got", vs.SumVisasUnique())
 	}
 }
+
+func TestGroupVisa_SumCommonCase1(t *testing.T) {
+	gv := NewGroupVisa()
+	str := "abc"
+
+	gv.loadStr(str)
+
+	if gv.SumCommon() != 3 {
+		t.Error("Expected 3; got", gv.SumUnique())
+	}
+}
+
+func TestGroupVisa_SumCommonCase2(t *testing.T) {
+	gv := NewGroupVisa()
+	strS := []string{"a", "a", "a", "a"}
+
+	for _, str := range strS {
+		gv.loadStr(str)
+	}
+
+	if gv.SumUnique() != 1 {
+		t.Error("Expected 1; got", gv.SumUnique())
+	}
+}
+
+func TestVisaScanner_SumVisasCommon(t *testing.T) {
+	vs := NewVisaScanner()
+	gv := NewGroupVisa()
+	loadStrs := [][]string{{"abc"}, {"a", "b", "c"}, {"ab", "ac"}, {"a", "a", "a", "a"}, {"b"}}
+	for _, strS := range loadStrs {
+		for _, str := range strS {
+			gv.loadStr(str)
+		}
+		vs.LoadVisa(*gv)
+		gv = NewGroupVisa()
+	}
+
+	if vs.SumVisasCommon() != 6 {
+		t.Error("Expected 6; got", vs.SumVisasUnique())
+	}
+}
