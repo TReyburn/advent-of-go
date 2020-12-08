@@ -15,7 +15,7 @@ func (v *GroupVisa) loadStr(s string) {
 	}
 }
 
-func (v GroupVisa) Sum() int {
+func (v GroupVisa) SumUnique() int {
 	return len(v.Data)
 }
 
@@ -35,7 +35,7 @@ func (vs *VisaScanner) LoadVisa(gv GroupVisa) {
 func (vs VisaScanner) SumVisas() int {
 	sum := 0
 	for _, gv := range vs.Visas {
-		sum += gv.Sum()
+		sum += gv.SumUnique()
 	}
 	return sum
 }

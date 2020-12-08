@@ -21,8 +21,8 @@ func TestGroupVisa_SumCase1(t *testing.T) {
 
 	gv.loadStr(str)
 
-	if gv.Sum() != 3 {
-		t.Error("Expected 3; got", gv.Sum())
+	if gv.SumUnique() != 3 {
+		t.Error("Expected 3; got", gv.SumUnique())
 	}
 }
 
@@ -32,8 +32,8 @@ func TestGroupVisa_SumCase2(t *testing.T) {
 
 	gv.loadStr(str)
 
-	if gv.Sum() != 1 {
-		t.Error("Expected 1; got", gv.Sum())
+	if gv.SumUnique() != 1 {
+		t.Error("Expected 1; got", gv.SumUnique())
 	}
 }
 
