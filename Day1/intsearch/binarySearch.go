@@ -1,8 +1,37 @@
 package intsearch
 
 import (
+	"bytes"
 	"errors"
+	"strconv"
+	"strings"
 )
+
+type DataManager struct {
+	Data []int
+}
+
+func (dm *DataManager) Write(p []byte) (int, error) {
+	rb := len(p)
+	bss := bytes.Split(p, []byte{13})
+	// Iterating over [][]byte, converting each []byte to str, converting str to int, and then appending int to []int
+	for _, bString := range bss {
+		sInt := string(bString)
+		// Removing newline chars
+		sInt = strings.Trim(sInt, "\n")
+		n, err := strconv.Atoi(sInt)
+		if err != nil {
+			return 0, err
+		}
+		dm.Data = append(dm.Data, n)
+	}
+	return rb, nil
+}
+
+func NewDataManager() *DataManager {
+	dm := DataManager{Data: make([]int, 0)}
+	return &dm
+}
 
 type Solution struct {
 	Values []int

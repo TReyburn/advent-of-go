@@ -43,18 +43,22 @@ func main() {
 
 	fmt.Println("How many values to sum up?")
 	_, err = fmt.Scanln(&numCount)
+	if err != nil {
+		log.Fatalln("User input error", err)
+	}
 	intNumCount, err := strconv.Atoi(numCount)
 	if err != nil {
 		log.Fatalln("User input error", err)
 	}
 
-
-	intSlice, err := filehandler.LoadDay1File(filePath)
+	dm := intsearch.NewDataManager()
+	err = filehandler.LoadInputFile(filePath, dm)
 	if err != nil {
 		log.Fatalln("Error reading file", err)
 	}
-	sort.Ints(intSlice)
-	sol, err := intsearch.IntSearch(intSlice, intSumValue, intNumCount)
+
+	sort.Ints(dm.Data)
+	sol, err := intsearch.IntSearch(dm.Data, intSumValue, intNumCount)
 	if err != nil {
 		log.Fatalln(err)
 	}
