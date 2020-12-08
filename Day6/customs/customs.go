@@ -7,6 +7,7 @@ import (
 
 type GroupVisa struct {
 	Data map[string]int
+	Count int
 }
 
 func (v *GroupVisa) loadStr(s string) {
@@ -17,6 +18,7 @@ func (v *GroupVisa) loadStr(s string) {
 			v.Data[char] = 1
 		}
 	}
+	v.Count++
 }
 
 func (v GroupVisa) SumUnique() int {
@@ -26,7 +28,7 @@ func (v GroupVisa) SumUnique() int {
 func (v GroupVisa) SumCommon() int {
 	common := 0
 	for _, val := range v.Data {
-		if val == len(v.Data) {
+		if val == v.Count {
 			common++
 		}
 	}
@@ -34,7 +36,7 @@ func (v GroupVisa) SumCommon() int {
 }
 
 func NewGroupVisa() *GroupVisa {
-	v := GroupVisa{Data: make(map[string]int)}
+	v := GroupVisa{Data: make(map[string]int), Count: 0}
 	return &v
 }
 
@@ -50,6 +52,14 @@ func (vs VisaScanner) SumVisasUnique() int {
 	sum := 0
 	for _, gv := range vs.Visas {
 		sum += gv.SumUnique()
+	}
+	return sum
+}
+
+func (vs VisaScanner) SumVisasCommon() int {
+	sum := 0
+	for _, gv := range vs.Visas {
+		sum += gv.SumCommon()
 	}
 	return sum
 }
