@@ -10,6 +10,7 @@ func LoadInputFile(fp string, writer io.Writer) error {
 	if err != nil {
 		return err
 	}
+	defer f.Close()
 	_, err = io.Copy(writer, f)
 	return err
 }
