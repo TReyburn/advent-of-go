@@ -170,3 +170,29 @@ func TestHclValidateNeg2(t *testing.T) {
 		t.Error("Failed to invalidate hcl:123abc")
 	}
 }
+
+func TestEclValidatePos(t *testing.T) {
+	v := "brn"
+
+	res, err := eclValidate(v)
+	if err != nil {
+		t.Error("Unexpected error", err)
+	}
+
+	if res != true {
+		t.Error("Failed to validate ecl:brn")
+	}
+}
+
+func TestEclValidateNeg(t *testing.T) {
+	iv := "wat"
+
+	res, err := eclValidate(iv)
+	if err != nil {
+		t.Error("Unexpected error", err)
+	}
+
+	if res != false {
+		t.Error("Failed to invalidate ecl:wat")
+	}
+}

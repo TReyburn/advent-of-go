@@ -77,3 +77,15 @@ func hclValidate(hcl string) (bool, error) {
 	}
 	return res, nil
 }
+
+// ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
+func eclValidate(hcl string) (bool, error) {
+	vc := 0
+	allowed := []string{"amb", "blu", "brn", "gry", "grn", "hzl", "oth"}
+	for _, c := range allowed {
+		if hcl == c {
+			vc++
+		}
+	}
+	return vc == 1, nil
+}
