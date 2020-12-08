@@ -9,8 +9,10 @@ type GroupVisa struct {
 	Data map[string]bool
 }
 
-func (v *GroupVisa) Load(k string) {
-	v.Data[k] = true
+func (v *GroupVisa) loadStr(s string) {
+	for _, char := range strings.Split(s, "") {
+		v.Data[char] = true
+	}
 }
 
 func (v GroupVisa) Sum() int {
@@ -26,6 +28,18 @@ type VisaScanner struct {
 	Visas []GroupVisa
 }
 
+func (vs *VisaScanner) LoadVisa(gv GroupVisa) {
+	vs.Visas = append(vs.Visas, gv)
+}
+
+func (vs VisaScanner) SumVisas() int {
+	sum := 0
+	for _, gv := range vs.Visas {
+		sum += gv.Sum()
+	}
+	return sum
+}
+
 func (vs *VisaScanner) Write(p []byte) (int, error) {
 	rb := len(p)
 	gv := NewGroupVisa()
@@ -34,11 +48,9 @@ func (vs *VisaScanner) Write(p []byte) (int, error) {
 		rawString := string(bString)
 		rawString = strings.Trim(rawString, "\n")
 		if rawString != "" {
-			for _, char := range strings.Split(rawString, "") {
-				gv.Load(char)
-			}
+			gv.loadStr(rawString)
 		} else {
-			vs.Visas = append(vs.Visas, *gv)
+			vs.LoadVisa(*gv)
 			gv = NewGroupVisa()
 		}
 	}
