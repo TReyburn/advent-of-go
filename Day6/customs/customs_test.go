@@ -37,7 +37,7 @@ func TestGroupVisa_SumUniqueCase2(t *testing.T) {
 	}
 }
 
-func TestVisaScanner_SumVisas(t *testing.T) {
+func TestVisaScanner_SumVisasUniqueVisas(t *testing.T) {
 	vs := NewVisaScanner()
 	gv := NewGroupVisa()
 	loadStrs := []string{"abc", "abc", "abac", "aaaa", "b"}
