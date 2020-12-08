@@ -31,7 +31,7 @@ func TestMultiTraverse(t *testing.T) {
 	}
 }
 
-func TestDumbTraverseCase1(t *testing.T) {
+func TestTraverseCase1(t *testing.T) {
 	count := Traverse(testData, "#", 1, 3)
 
 	if count != 7 {
@@ -39,7 +39,7 @@ func TestDumbTraverseCase1(t *testing.T) {
 	}
 }
 
-func TestDumbTraverseCase2(t *testing.T) {
+func TestTraverseCase2(t *testing.T) {
 	count := Traverse(testData, "#", 1, 1)
 
 	if count != 2 {
@@ -47,7 +47,7 @@ func TestDumbTraverseCase2(t *testing.T) {
 	}
 }
 
-func TestDumbTraverseCase3(t *testing.T) {
+func TestTraverseCase3(t *testing.T) {
 	count := Traverse(testData, "#", 1, 5)
 
 	if count != 3 {
@@ -55,7 +55,7 @@ func TestDumbTraverseCase3(t *testing.T) {
 	}
 }
 
-func TestDumbTraverseCase4(t *testing.T) {
+func TestTraverseCase4(t *testing.T) {
 	count := Traverse(testData, "#", 1, 7)
 
 	if count != 4 {
@@ -63,7 +63,7 @@ func TestDumbTraverseCase4(t *testing.T) {
 	}
 }
 
-func TestDumbTraverseCase5(t *testing.T) {
+func TestTraverseCase5(t *testing.T) {
 	count := Traverse(testData, "#", 2, 1)
 
 	if count != 2 {

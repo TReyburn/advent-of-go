@@ -8,11 +8,12 @@ import (
 )
 
 func main() {
-	data, err := filehandler.LoadDay3File("assets/input.txt")
+	ng := &traverse.NotAGraph{Data: make([]string, 0)}
+	err := filehandler.LoadInputFile("assets/input.txt", ng)
 	if err != nil {
 		log.Fatalln("Error opening file", err)
 	}
-	res := traverse.Traverse(data, "#", 1, 3)
+	res := traverse.Traverse(ng.Data, "#", 1, 3)
 	fmt.Println("We hit", res, "trees")
 
 	angles := [][]int{
@@ -22,6 +23,6 @@ func main() {
 		[]int{1,7},
 		[]int{2,1},
 	}
-	fres := traverse.MultiTraverse(data, "#", angles)
+	fres := traverse.MultiTraverse(ng.Data, "#", angles)
 	fmt.Println("Multitraverse result of", fres)
 }

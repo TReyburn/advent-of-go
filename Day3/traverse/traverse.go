@@ -1,5 +1,25 @@
 package traverse
 
+import (
+	"bytes"
+	"strings"
+)
+
+type NotAGraph struct {
+	Data []string
+}
+
+func (ng *NotAGraph) Write(p []byte) (int, error) {
+	bss := bytes.Split(p, []byte{13})
+	rb := len(p)
+	for _, bString := range bss {
+		rawString := string(bString)
+		rawString = strings.Trim(rawString, "\n")
+		ng.Data = append(ng.Data, rawString)
+	}
+	return rb, nil
+}
+
 func Traverse(tm []string, search string, xInc int, yInc int) int {
 	xLoc := 0
 	yLoc := 0
