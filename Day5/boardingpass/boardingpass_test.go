@@ -86,7 +86,7 @@ func TestBPManager_MaxId(t *testing.T) {
 	bpm.Passes = append(bpm.Passes, &bp2)
 	bpm.Passes = append(bpm.Passes, &bp3)
 	bpm.DecodeAll()
-	res := bpm.MaxID()
+	res := bpm.GetMaxID()
 
 	if res != 820 {
 		t.Error("Expected max ID of 820; got", res)

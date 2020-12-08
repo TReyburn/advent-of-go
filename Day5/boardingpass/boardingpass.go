@@ -9,7 +9,7 @@ type BPManager struct {
 	Passes []*BoardingPass
 }
 
-func (bpm BPManager) MaxID() int {
+func (bpm BPManager) GetMaxID() int {
 	max := 0
 	for _, bp := range bpm.Passes {
 		if bp.ID > max {

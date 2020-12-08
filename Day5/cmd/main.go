@@ -13,5 +13,6 @@ func main() {
 	if err != nil {
 		log.Fatalln("Unexpected error loading file", err)
 	}
-	fmt.Println(bpm.Passes)
+	bpm.DecodeAll()
+	fmt.Println("Max ID:", bpm.GetMaxID())
 }
