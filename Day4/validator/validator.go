@@ -10,6 +10,23 @@ type Validator struct {
 	Validators map[string]func(string)(bool, error)
 }
 
+func (v *Validator) LoadValidators() {
+	v.Validators["bry"] = byrValidate
+	v.Validators["iyr"] = iyrValidate
+	v.Validators["eyr"] = eyrValidate
+	v.Validators["hgt"] = hgtValidate
+	v.Validators["hcl"] = hclValidate
+	v.Validators["ecl"] = eclValidate
+	v.Validators["pid"] = pidValidate
+	v.Validators["cid"] = cidValidate
+}
+
+func NewValidator() *Validator {
+	v := Validator{Validators: make(map[string]func(string)(bool, error))}
+	v.LoadValidators()
+	return &v
+}
+
 // byr (Birth Year) - four digits; at least 1920 and at most 2002.
 func byrValidate(byr string) (bool, error) {
 	if len(byr) != 4 {
