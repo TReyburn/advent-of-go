@@ -6,12 +6,16 @@ import (
 )
 
 type GroupVisa struct {
-	Data map[string]bool
+	Data map[string]int
 }
 
 func (v *GroupVisa) loadStr(s string) {
 	for _, char := range strings.Split(s, "") {
-		v.Data[char] = true
+		if val, ok := v.Data[char]; ok {
+			v.Data[char] = val + 1
+		} else {
+			v.Data[char] = 1
+		}
 	}
 }
 
@@ -20,7 +24,7 @@ func (v GroupVisa) SumUnique() int {
 }
 
 func NewGroupVisa() *GroupVisa {
-	v := GroupVisa{Data: make(map[string]bool)}
+	v := GroupVisa{Data: make(map[string]int)}
 	return &v
 }
 
