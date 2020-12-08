@@ -86,32 +86,6 @@ func TestPassport_ValidateCase4(t *testing.T) {
 	}
 }
 
-func TestPassportsScanner_ValidatePassports(t *testing.T) {
-	ps := NewPassportScanner()
-	err := filehandler.LoadInputFile("testdata/input.txt", ps)
-	if err != nil {
-		t.Error("Unexpected error reading file:", err)
-	}
-
-	res := ps.ValidatePassports(required)
-	if res != 2 {
-		t.Error("Expected 2 valid; got", res)
-	}
-}
-
-func TestPassportsScanner_Write(t *testing.T) {
-	ps := NewPassportScanner()
-	err := filehandler.LoadInputFile("testdata/input.txt", ps)
-	if err != nil {
-		t.Error("Unexpected error reading file:", err)
-	}
-
-	l := len(ps.Passports)
-	if l != 4 {
-		t.Error("Expected 4 passports; got", l)
-	}
-}
-
 func TestPassport_ValidateDataPos1(t *testing.T) {
 	v := validator.NewValidator()
 	pp := NewPassport()
@@ -197,5 +171,61 @@ func TestPassport_ValidateDataNeg4(t *testing.T) {
 
 	if res != false {
 		t.Error("Case 4 - expected false; got", res)
+	}
+}
+
+func TestPassportsScanner_ValidatePassports(t *testing.T) {
+	ps := NewPassportScanner()
+	err := filehandler.LoadInputFile("testdata/input.txt", ps)
+	if err != nil {
+		t.Error("Unexpected error reading file:", err)
+	}
+
+	res := ps.ValidatePassports(required)
+	if res != 2 {
+		t.Error("Expected 2 valid; got", res)
+	}
+}
+
+func TestPassportsScanner_ValidatePassportsData(t *testing.T) {
+	ps := NewPassportScanner()
+	err := filehandler.LoadInputFile("testdata/input2.txt", ps)
+	if err != nil {
+		t.Error("Unexpected error reading file:", err)
+	}
+
+	v := validator.NewValidator()
+
+	res := ps.ValidatePassportsData(*v)
+	if res != 4 {
+		t.Error("Expected 4 valid; got", res)
+	}
+}
+
+func TestPassportsScanner_ValidatePassportsDataNeg(t *testing.T) {
+	ps := NewPassportScanner()
+	err := filehandler.LoadInputFile("testdata/input3.txt", ps)
+	if err != nil {
+		t.Error("Unexpected error reading file:", err)
+	}
+
+	v := validator.NewValidator()
+
+	res := ps.ValidatePassportsData(*v)
+	if res != 0 {
+		t.Error("Expected 0 valid; got", res)
+	}
+}
+
+func TestPassportsScanner_Write(t *testing.T) {
+	ps := NewPassportScanner()
+	err := filehandler.LoadInputFile("testdata/input.txt", ps)
+	if err != nil {
+		t.Error("Unexpected error reading file:", err)
+	}
+
+	l := len(ps.Passports)
+	if l != 4 {
+		t.Error("Expected 4 passports; got", l)
 	}
 }

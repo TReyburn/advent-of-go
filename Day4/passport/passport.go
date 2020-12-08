@@ -71,6 +71,18 @@ func (ps PassportsScanner) ValidatePassports(req []string) int {
 	return vc
 }
 
+func (ps PassportsScanner) ValidatePassportsData(v validator.Validator) int {
+	vc := 0
+
+	for _, pp := range ps.Passports {
+		res := pp.ValidateData(v)
+		if res {
+			vc++
+		}
+	}
+	return vc
+}
+
 func (ps *PassportsScanner) Write(p []byte) (n int, err error) {
 	bss := bytes.Split(p, []byte{13})
 	pp := NewPassport()
