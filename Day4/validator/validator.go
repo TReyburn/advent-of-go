@@ -89,3 +89,20 @@ func eclValidate(hcl string) (bool, error) {
 	}
 	return vc == 1, nil
 }
+
+// pid (Passport ID) - a nine-digit number, including leading zeroes.
+func pidValidate(pid string) (bool, error) {
+	if len(pid) != 9 {
+		return false, nil
+	}
+	res, err := regexp.MatchString("[0-9]{9}", pid)
+	if err != nil {
+		return false, err
+	}
+	return res, nil
+}
+
+// cid (Country ID) - ignored, missing or not.
+func cidValidate(cid string) (bool, error) {
+	return true, nil
+}

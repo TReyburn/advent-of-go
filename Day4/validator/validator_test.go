@@ -196,3 +196,42 @@ func TestEclValidateNeg(t *testing.T) {
 		t.Error("Failed to invalidate ecl:wat")
 	}
 }
+
+func TestPidValidatePos(t *testing.T) {
+	v := "000000001"
+
+	res, err := pidValidate(v)
+	if err != nil {
+		t.Error("Unexpected error", err)
+	}
+
+	if res != true {
+		t.Error("Failed to validate pid:000000001")
+	}
+}
+
+func TestPidValidateNeg1(t *testing.T) {
+	iv := "0123456789"
+
+	res, err := pidValidate(iv)
+	if err != nil {
+		t.Error("Unexpected error", err)
+	}
+
+	if res != false {
+		t.Error("Failed to invalidate pid:0123456789")
+	}
+}
+
+func TestPidValidateNeg2(t *testing.T) {
+	iv := "0123a56789"
+
+	res, err := pidValidate(iv)
+	if err != nil {
+		t.Error("Unexpected error", err)
+	}
+
+	if res != false {
+		t.Error("Failed to invalidate pid:0123a56789")
+	}
+}
