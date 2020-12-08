@@ -29,19 +29,19 @@ func NewBoardingPassManager() *BPManager {
 }
 
 type BoardingPass struct {
-	Code string
-	Row int
+	Code   string
+	Row    int
 	Column int
-	ID int
+	ID     int
 }
 
 func (bp *BoardingPass) Decode() {
-
+	bp.Row = binarySearch(bp.Code[:7], 0, 127, "F", "B")
+	bp.Column = binarySearch(bp.Code[7:], 0, 7, "L", "R")
+	bp.ID = bp.Column + (bp.Row * 8)
 }
 
-func parseRow(cs string) int {
-	low := 0
-	high := 127
+func binarySearch(cs string, low int, high int, lowInd string, highInd string) int {
 	css := strings.Split(cs, "")
 	mid := 0
 
@@ -50,10 +50,13 @@ func parseRow(cs string) int {
 		if low == high {
 			return mid
 		}
-		if c == "F" {
+		switch {
+		case c == lowInd:
 			high = mid - 1
-		} else {
+		case c == highInd:
 			low = mid + 1
+		default:
+			return 0
 		}
 	}
 	return mid
