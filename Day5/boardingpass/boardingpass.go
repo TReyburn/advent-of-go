@@ -43,21 +43,18 @@ func (bp *BoardingPass) Decode() {
 
 func binarySearch(cs string, low int, high int, lowInd string, highInd string) int {
 	css := strings.Split(cs, "")
-	mid := 0
 
 	for _, c := range css {
-		mid = (low + high) / 2
-		if low == high {
-			return mid
-		}
 		switch {
 		case c == lowInd:
-			high = mid - 1
+			// Go division is floor division - so no need to subtract by 1
+			high = (low + high) / 2
 		case c == highInd:
-			low = mid + 1
+			low = (low + high) / 2 + 1
 		default:
 			return 0
 		}
 	}
-	return mid
+	// low == high at this point
+	return low
 }
