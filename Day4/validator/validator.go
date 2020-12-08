@@ -11,7 +11,7 @@ type Validator struct {
 }
 
 func (v *Validator) loadValidators() {
-	v.Validators["bry"] = byrValidate
+	v.Validators["byr"] = byrValidate
 	v.Validators["iyr"] = iyrValidate
 	v.Validators["eyr"] = eyrValidate
 	v.Validators["hgt"] = hgtValidate
