@@ -2,7 +2,6 @@ package filehandler
 
 import (
 	"bytes"
-	"github.com/TReyburn/advent-of-go/Day2/password"
 	"io"
 	"io/ioutil"
 	"os"
@@ -23,15 +22,6 @@ func LoadDay1File(fp string) ([]int, error) {
 		return []int{}, err
 	}
 	return res, nil
-}
-
-func LoadDay2File(fp string) ([]password.Password, error) {
-	fb, err := loadFileBytes(fp)
-	if err != nil {
-		return []password.Password{}, err
-	}
-	pws, err := convertByteStoPasswordS(fb)
-	return pws, err
 }
 
 func LoadInputFile(fp string, writer io.Writer) error {
@@ -68,32 +58,4 @@ func convertByteSToIntS(bss [][]byte) ([]int, error) {
 		ns = append(ns, n)
 	}
 	return ns, nil
-}
-
-func convertByteStoPasswordS(bss [][]byte) ([]password.Password, error) {
-	pws := make([]password.Password, 0)
-	for _, bstring := range bss {
-		rawString := string(bstring)
-		// Removing newline chars
-		rawString = strings.Trim(rawString, "\n")
-		pwStringS := strings.Split(rawString, " ")
-		lh := strings.Split(pwStringS[0], "-")
-		low, err := strconv.Atoi(lh[0])
-		if err != nil {
-			return []password.Password{}, err
-		}
-		high, err := strconv.Atoi(lh[1])
-		if err != nil {
-			return []password.Password{}, err
-		}
-		ltr := strings.Trim(pwStringS[1], ":")
-		pwd := password.Password{
-			Required: ltr,
-			Low:      low,
-			High:     high,
-			Password: pwStringS[2],
-		}
-		pws = append(pws, pwd)
-	}
-	return pws, nil
 }
