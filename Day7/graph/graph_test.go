@@ -158,3 +158,57 @@ func TestGraph_GetNodeByName(t *testing.T) {
 		t.Error("Expected dotted black bag; got", node.Name)
 	}
 }
+
+func TestGraph_BFSTraverseDirect(t *testing.T) {
+	g := NewGraph()
+	err := filehandler.LoadInputFile("testdata/test.txt", g)
+	if err != nil {
+		t.Error("Unexpected error writing", err)
+	}
+
+	node, err := g.GetNodeByName("bright white bag")
+	if err != nil {
+		t.Error("Unexpected err:", err)
+	}
+
+	res := g.BFSTraverse(node, "shiny gold bag")
+	if res != true {
+		t.Error("Expected to find shiny gold bag - but did not")
+	}
+}
+
+func TestGraph_BFSTraverseIndirect(t *testing.T) {
+	g := NewGraph()
+	err := filehandler.LoadInputFile("testdata/test.txt", g)
+	if err != nil {
+		t.Error("Unexpected error writing", err)
+	}
+
+	node, err := g.GetNodeByName("dark orange bag")
+	if err != nil {
+		t.Error("Unexpected err:", err)
+	}
+
+	res := g.BFSTraverse(node, "shiny gold bag")
+	if res != true {
+		t.Error("Expected to find shiny gold bag - but did not")
+	}
+}
+
+func TestGraph_BFSTraverseNopath(t *testing.T) {
+	g := NewGraph()
+	err := filehandler.LoadInputFile("testdata/test.txt", g)
+	if err != nil {
+		t.Error("Unexpected error writing", err)
+	}
+
+	node, err := g.GetNodeByName("vibrant plum bag")
+	if err != nil {
+		t.Error("Unexpected err:", err)
+	}
+
+	res := g.BFSTraverse(node, "shiny gold bag")
+	if res != false {
+		t.Error("Expected to not find gold bag - but did")
+	}
+}
