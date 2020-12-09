@@ -2,6 +2,7 @@ package graph
 
 import (
 	"bytes"
+	"errors"
 	"strconv"
 	"strings"
 )
@@ -65,6 +66,36 @@ func (g *Graph) AddNode(node *Node) {
 }
 
 func (g *Graph) BFSTraverse(startNode *Node, endNodeName string) bool {
+	q := NewQueue()
+	vistedNodes := []*Node{startNode}
+	startEdges := g.GetNodeEdges(startNode)
+	for _, edge := range startEdges {
+		q.Enqueue(edge.Child)
+	}
+
+	for {
+		node := q.Dequeue()
+		if node.Name == endNodeName {
+			return true
+		}
+		visited := false
+		for _, vnode := range vistedNodes {
+			if vnode == node {
+				visited = true
+				break
+			}
+		}
+		if !visited {
+			vistedNodes = append(vistedNodes, node)
+			edges := g.GetNodeEdges(node)
+			for _, edge := range edges {
+				q.Enqueue(edge.Child)
+			}
+		}
+		if q.Size() == 0 {
+			break
+		}
+	}
 	return false
 }
 
@@ -76,6 +107,15 @@ func (g *Graph) GetNodeEdges(node *Node) []*Edge {
 		}
 	}
 	return edges
+}
+
+func (g *Graph) GetNodeByName(name string) (*Node, error) {
+	for _, node := range g.Nodes {
+		if node.Name == name {
+			return node, nil
+		}
+	}
+	return NewNode(""), errors.New("could not find node")
 }
 
 func (g *Graph) LoadStr(rawStr string) error {
@@ -127,4 +167,9 @@ func NewGraph() *Graph {
 		Edges: make([]*Edge, 0),
 	}
 	return &g
+}
+
+func NewQueue() *Queue {
+	q := Queue{Nodes: make([]*Node, 0)}
+	return &q
 }
