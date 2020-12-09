@@ -1,6 +1,7 @@
 package graph
 
 import (
+	"bytes"
 	"strconv"
 	"strings"
 )
@@ -26,6 +27,7 @@ func (g *Graph) AddEdge(parent *Node, child *Node, cost int) {
 		Child:  child,
 		Cost:   cost,
 	}
+	// If we have duplicate edges then we are kinda screwed. What about circular edges?
 	g.Edges = append(g.Edges, &edge)
 	g.AddNode(parent)
 	g.AddNode(child)
@@ -66,6 +68,20 @@ func (g *Graph) LoadStr(rawStr string) error {
 		g.AddEdge(parent, child, cost)
 	}
 	return nil
+}
+
+func (g *Graph) Write(p []byte) (int, error) {
+	rb := len(p)
+	bss := bytes.Split(p, []byte{13})
+	for _, bString := range bss {
+		rawStr := string(bString)
+		rawStr = strings.Trim(rawStr, "\n")
+		err := g.LoadStr(rawStr)
+		if err != nil {
+			return 0, err
+		}
+	}
+	return rb, nil
 }
 
 func NewNode(name string) *Node {
