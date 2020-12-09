@@ -225,3 +225,91 @@ func TestGraph_CountPossiblePaths(t *testing.T) {
 		t.Error("Expected 4 possible paths; got", res)
 	}
 }
+
+func TestGraph_DFSCostSumIndirect1(t *testing.T) {
+	g := NewGraph()
+	err := filehandler.LoadInputFile("testdata/test.txt", g)
+	if err != nil {
+		t.Error("Unexpected error writing", err)
+	}
+
+	sgb, err := g.GetNodeByName("vibrant plum bag")
+	if err != nil {
+		t.Error("Didn't find vibrant plum - but should have")
+	}
+
+	total := g.DFSCostSum(sgb)
+	if total != 11 {
+		t.Error("Expected a total of 11; got", total)
+	}
+}
+
+func TestGraph_DFSCostSumIndirect2(t *testing.T) {
+	g := NewGraph()
+	err := filehandler.LoadInputFile("testdata/test.txt", g)
+	if err != nil {
+		t.Error("Unexpected error writing", err)
+	}
+
+	sgb, err := g.GetNodeByName("dark olive bag")
+	if err != nil {
+		t.Error("Didn't find dark olive bag - but should have")
+	}
+
+	total := g.DFSCostSum(sgb)
+	if total != 7 {
+		t.Error("Expected a total of 7; got", total)
+	}
+}
+
+func TestGraph_DFSCostSumDirect(t *testing.T) {
+	g := NewGraph()
+	err := filehandler.LoadInputFile("testdata/test.txt", g)
+	if err != nil {
+		t.Error("Unexpected error writing", err)
+	}
+
+	sgb, err := g.GetNodeByName("faded blue bag")
+	if err != nil {
+		t.Error("Didn't find faded blue bag - but should have")
+	}
+
+	total := g.DFSCostSum(sgb)
+	if total != 0 {
+		t.Error("Expected a total of 1; got", total)
+	}
+}
+
+func TestGraph_CountTotalNestedBags(t *testing.T) {
+	g := NewGraph()
+	err := filehandler.LoadInputFile("testdata/test.txt", g)
+	if err != nil {
+		t.Error("Unexpected error writing", err)
+	}
+
+	res, err := g.CountTotalNestedBags("shiny gold bag")
+	if err != nil {
+		t.Error("Unexpected err,", err)
+	}
+
+	if res != 32 {
+		t.Error("Expected total of 32 bags; got", res)
+	}
+}
+
+func TestGraph_CountTotalNestedBags2(t *testing.T) {
+	g := NewGraph()
+	err := filehandler.LoadInputFile("testdata/test2.txt", g)
+	if err != nil {
+		t.Error("Unexpected error writing", err)
+	}
+
+	res, err := g.CountTotalNestedBags("shiny gold bag")
+	if err != nil {
+		t.Error("Unexpected err,", err)
+	}
+
+	if res != 126 {
+		t.Error("Expected total of 32 bags; got", res)
+	}
+}

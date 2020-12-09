@@ -65,6 +65,16 @@ func (g *Graph) AddNode(node *Node) {
 	}
 }
 
+func (g *Graph) DFSCostSum(startNode *Node) int {
+	cost := 0
+	startEdges := g.GetNodeEdges(startNode)
+	for _, edge := range startEdges {
+		res := g.DFSCostSum(edge.Child)
+		cost += (edge.Cost * res) + edge.Cost
+	}
+	return cost
+}
+
 func (g *Graph) BFSTraverse(startNode *Node, endNodeName string) bool {
 	q := NewQueue()
 	vistedNodes := []*Node{startNode}
@@ -110,6 +120,15 @@ func (g *Graph) CountPossiblePaths(searchNodeName string) int {
 		}
 	}
 	return count
+}
+
+func (g *Graph) CountTotalNestedBags(searchNodeName string) (int, error) {
+	startNode, err := g.GetNodeByName(searchNodeName)
+	if err != nil {
+		return 0, err
+	}
+	res := g.DFSCostSum(startNode)
+	return res, nil
 }
 
 func (g *Graph) GetNodeEdges(node *Node) []*Edge {
