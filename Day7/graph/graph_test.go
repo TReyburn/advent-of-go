@@ -1,6 +1,10 @@
 package graph
 
-import "testing"
+import (
+	"fmt"
+	"github.com/TReyburn/advent-of-go/common/filehandler"
+	"testing"
+)
 
 func TestGraph_AddNode(t *testing.T) {
 	g := NewGraph()
@@ -97,5 +101,24 @@ func TestGraph_LoadStrNoEdge(t *testing.T) {
 
 	if len(g.Edges) != 0 {
 		t.Error("Expected Edges len of 2; got", len(g.Edges))
+	}
+}
+
+func TestGraph_Write(t *testing.T) {
+	g := NewGraph()
+	err := filehandler.LoadInputFile("testdata/test.txt", g)
+	if err != nil {
+		t.Error("Unexpected error writing", err)
+	}
+
+	if len(g.Nodes) != 9 {
+		t.Error("Expected Nodes len of 9; got", len(g.Nodes))
+		for _, node := range g.Nodes {
+			fmt.Println("Node:", node.Name)
+		}
+	}
+
+	if len(g.Edges) != 13 {
+		t.Error("Expected Edges len of 13; got", len(g.Edges))
 	}
 }
