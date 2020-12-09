@@ -21,4 +21,11 @@ func main() {
 	}
 	res := g.CountPossiblePaths("shiny gold bag")
 	fmt.Println("Count of bags which can eventual contain a shiny gold bag:", res)
+
+	total, err := g.CountTotalNestedBags("shiny gold bag")
+	if err != nil {
+		log.Fatalln("Unexpected err:", err)
+	}
+
+	fmt.Println("Total nested bags:", total)
 }
