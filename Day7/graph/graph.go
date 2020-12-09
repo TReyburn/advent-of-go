@@ -55,8 +55,8 @@ func (g *Graph) LoadStr(rawStr string) error {
 	}
 	children := strings.Split(split[1], ",")
 	for _, childStr := range children {
+		childStr = strings.TrimSuffix(childStr, ".")
 		childStr = strings.TrimSuffix(childStr, "s")
-		childStr = strings.TrimSuffix(childStr, "s.")
 		childStr = strings.TrimSpace(childStr)
 		childSlice := strings.SplitAfterN(childStr, " ", 2)
 		costStr := strings.TrimSpace(childSlice[0])
