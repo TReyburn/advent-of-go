@@ -1,8 +1,8 @@
 package graph
 
 import (
-	"bytes"
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -133,11 +133,14 @@ func (g *Graph) GetNodeByName(name string) (*Node, error) {
 
 func (g *Graph) LoadStr(rawStr string) error {
 	split := strings.Split(rawStr, "s contain ")
+	if len(split) != 2 {
+		return nil
+	}
 	parent, err := g.GetNodeByName(split[0])
 	if err != nil {
 		parent = NewNode(split[0])
 	}
-	if split[1] == "no other bags." {
+	if split[1] == "no other bags" || split[1] == "no other bags." {
 		g.AddNode(parent)
 		return nil
 	}
@@ -150,6 +153,7 @@ func (g *Graph) LoadStr(rawStr string) error {
 		costStr := strings.TrimSpace(childSlice[0])
 		cost, err := strconv.Atoi(costStr)
 		if err != nil {
+			fmt.Println("issues with children", children)
 			return err
 		}
 		child, err := g.GetNodeByName(childSlice[1])
@@ -163,10 +167,10 @@ func (g *Graph) LoadStr(rawStr string) error {
 
 func (g *Graph) Write(p []byte) (int, error) {
 	rb := len(p)
-	bss := bytes.Split(p, []byte{13})
-	for _, bString := range bss {
-		rawStr := string(bString)
-		rawStr = strings.Trim(rawStr, "\n")
+	rawString := string(p)
+	split := strings.Split(rawString, ".")
+	for _, rawStr:= range split {
+		rawStr = strings.Trim(rawStr, "\r\n")
 		err := g.LoadStr(rawStr)
 		if err != nil {
 			return 0, err
