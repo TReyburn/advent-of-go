@@ -99,6 +99,19 @@ func (g *Graph) BFSTraverse(startNode *Node, endNodeName string) bool {
 	return false
 }
 
+func (g *Graph) CountPossiblePaths(searchNodeName string) int {
+	count := 0
+	for _, node := range g.Nodes {
+		if node.Name != searchNodeName {
+			res := g.BFSTraverse(node, searchNodeName)
+			if res {
+				count++
+			}
+		}
+	}
+	return count
+}
+
 func (g *Graph) GetNodeEdges(node *Node) []*Edge {
 	edges := make([]*Edge, 0)
 	for _, edge := range g.Edges {

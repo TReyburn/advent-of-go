@@ -212,3 +212,16 @@ func TestGraph_BFSTraverseNopath(t *testing.T) {
 		t.Error("Expected to not find gold bag - but did")
 	}
 }
+
+func TestGraph_CountPossiblePaths(t *testing.T) {
+	g := NewGraph()
+	err := filehandler.LoadInputFile("testdata/test.txt", g)
+	if err != nil {
+		t.Error("Unexpected error writing", err)
+	}
+
+	res := g.CountPossiblePaths("shiny gold bag")
+	if res != 4 {
+		t.Error("Expected 4 possible paths; got", res)
+	}
+}
