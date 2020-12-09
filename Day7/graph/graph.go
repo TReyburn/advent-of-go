@@ -74,6 +74,9 @@ func (g *Graph) BFSTraverse(startNode *Node, endNodeName string) bool {
 	}
 
 	for {
+		if q.Size() == 0 {
+			break
+		}
 		node := q.Dequeue()
 		if node.Name == endNodeName {
 			return true
@@ -91,9 +94,6 @@ func (g *Graph) BFSTraverse(startNode *Node, endNodeName string) bool {
 			for _, edge := range edges {
 				q.Enqueue(edge.Child)
 			}
-		}
-		if q.Size() == 0 {
-			break
 		}
 	}
 	return false
@@ -120,7 +120,10 @@ func (g *Graph) GetNodeByName(name string) (*Node, error) {
 
 func (g *Graph) LoadStr(rawStr string) error {
 	split := strings.Split(rawStr, "s contain ")
-	parent := NewNode(split[0])
+	parent, err := g.GetNodeByName(split[0])
+	if err != nil {
+		parent = NewNode(split[0])
+	}
 	if split[1] == "no other bags." {
 		g.AddNode(parent)
 		return nil
@@ -136,7 +139,10 @@ func (g *Graph) LoadStr(rawStr string) error {
 		if err != nil {
 			return err
 		}
-		child := NewNode(childSlice[1])
+		child, err := g.GetNodeByName(childSlice[1])
+		if err != nil {
+			child = NewNode(childSlice[1])
+		}
 		g.AddEdge(parent, child, cost)
 	}
 	return nil
