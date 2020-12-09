@@ -63,3 +63,39 @@ func TestGraph_AddEdgeDuplicateNodes(t *testing.T) {
 		t.Error("Expected edges len of 2; got", len(g.Edges))
 	}
 }
+
+func TestGraph_LoadStr(t *testing.T) {
+	str := "light red bags contain 1 bright white bag, 2 muted yellow bags."
+	g := NewGraph()
+
+	err := g.LoadStr(str)
+	if err != nil {
+		t.Error("Unexpected err loading strings", err)
+	}
+
+	if len(g.Nodes) != 3 {
+		t.Error("Expected Nodes len of 3; got", len(g.Nodes))
+	}
+
+	if len(g.Edges) != 2 {
+		t.Error("Expected Edges len of 2; got", len(g.Edges))
+	}
+}
+
+func TestGraph_LoadStrNoEdge(t *testing.T) {
+	str := "faded blue bags contain no other bags."
+	g := NewGraph()
+
+	err := g.LoadStr(str)
+	if err != nil {
+		t.Error("Unexpected err loading strings", err)
+	}
+
+	if len(g.Nodes) != 1 {
+		t.Error("Expected Nodes len of 3; got", len(g.Nodes))
+	}
+
+	if len(g.Edges) != 0 {
+		t.Error("Expected Edges len of 2; got", len(g.Edges))
+	}
+}
