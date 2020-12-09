@@ -21,6 +21,24 @@ type Graph struct {
 	Edges []*Edge
 }
 
+type Queue struct {
+	Nodes []*Node
+}
+
+func (q *Queue) Enqueue(node *Node) {
+	q.Nodes = append(q.Nodes, node)
+}
+
+func (q *Queue) Dequeue() *Node {
+	node := q.Nodes[0]
+	q.Nodes = q.Nodes[1:]
+	return node
+}
+
+func (q *Queue) Size() int {
+	return len(q.Nodes)
+}
+
 func (g *Graph) AddEdge(parent *Node, child *Node, cost int) {
 	edge := Edge{
 		Parent: parent,
@@ -44,6 +62,10 @@ func (g *Graph) AddNode(node *Node) {
 	if !exists {
 		g.Nodes = append(g.Nodes, node)
 	}
+}
+
+func (g *Graph) BFSTraverse(startNode *Node, endNodeName string) bool {
+	return false
 }
 
 func (g *Graph) GetNodeEdges(node *Node) []*Edge {
