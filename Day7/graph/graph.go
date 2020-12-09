@@ -1,5 +1,10 @@
 package graph
 
+import (
+	"strconv"
+	"strings"
+)
+
 type Node struct {
 	Name string
 }
@@ -37,6 +42,29 @@ func (g *Graph) AddNode(node *Node) {
 	if !exists {
 		g.Nodes = append(g.Nodes, node)
 	}
+}
+
+func (g *Graph) LoadStr(rawStr string) error {
+	split := strings.Split(rawStr, "s contain ")
+	parent := NewNode(split[0])
+	if split[1] == "no other bags." {
+		g.AddNode(parent)
+		return nil
+	}
+	children := strings.Split(split[1], ",")
+	for _, childStr := range children {
+		childStr = strings.TrimSuffix(childStr, "s,")
+		childStr = strings.TrimSuffix(childStr, "s.")
+		childStr = strings.TrimSpace(childStr)
+		childSlice := strings.SplitAfterN(childStr, " ", 2)
+		cost, err := strconv.Atoi(childSlice[0])
+		if err != nil {
+			return err
+		}
+		child := NewNode(childSlice[1])
+		g.AddEdge(parent, child, cost)
+	}
+	return nil
 }
 
 func NewNode(name string) *Node {
