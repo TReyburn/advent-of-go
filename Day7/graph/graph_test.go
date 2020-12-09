@@ -122,3 +122,22 @@ func TestGraph_Write(t *testing.T) {
 		t.Error("Expected Edges len of 13; got", len(g.Edges))
 	}
 }
+
+func TestGraph_GetNodeEdges(t *testing.T) {
+	g := NewGraph()
+	err := filehandler.LoadInputFile("testdata/test.txt", g)
+	if err != nil {
+		t.Error("Unexpected error writing", err)
+	}
+	searchNode := g.Nodes[0]
+
+	if searchNode.Name != "light red bag" {
+		t.Error("First node should have been 'light red bag'; got", searchNode.Name)
+	}
+
+	res := g.GetNodeEdges(searchNode)
+
+	if len(res) != 2 {
+		t.Error("Expected edges len of 2; got", len(res))
+	}
+}

@@ -46,6 +46,16 @@ func (g *Graph) AddNode(node *Node) {
 	}
 }
 
+func (g *Graph) GetNodeEdges(node *Node) []*Edge {
+	edges := make([]*Edge, 0)
+	for _, edge := range g.Edges {
+		if edge.Parent == node {
+			edges = append(edges, edge)
+		}
+	}
+	return edges
+}
+
 func (g *Graph) LoadStr(rawStr string) error {
 	split := strings.Split(rawStr, "s contain ")
 	parent := NewNode(split[0])
