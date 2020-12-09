@@ -53,11 +53,12 @@ func (g *Graph) LoadStr(rawStr string) error {
 	}
 	children := strings.Split(split[1], ",")
 	for _, childStr := range children {
-		childStr = strings.TrimSuffix(childStr, "s,")
+		childStr = strings.TrimSuffix(childStr, "s")
 		childStr = strings.TrimSuffix(childStr, "s.")
 		childStr = strings.TrimSpace(childStr)
 		childSlice := strings.SplitAfterN(childStr, " ", 2)
-		cost, err := strconv.Atoi(childSlice[0])
+		costStr := strings.TrimSpace(childSlice[0])
+		cost, err := strconv.Atoi(costStr)
 		if err != nil {
 			return err
 		}
