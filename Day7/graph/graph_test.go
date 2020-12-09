@@ -141,3 +141,20 @@ func TestGraph_GetNodeEdges(t *testing.T) {
 		t.Error("Expected edges len of 2; got", len(res))
 	}
 }
+
+func TestGraph_GetNodeByName(t *testing.T) {
+	g := NewGraph()
+	err := filehandler.LoadInputFile("testdata/test.txt", g)
+	if err != nil {
+		t.Error("Unexpected error writing", err)
+	}
+
+	node, err := g.GetNodeByName("dotted black bag")
+	if err != nil {
+		t.Error("Unexpected err:", err)
+	}
+
+	if node.Name != "dotted black bag" {
+		t.Error("Expected dotted black bag; got", node.Name)
+	}
+}
