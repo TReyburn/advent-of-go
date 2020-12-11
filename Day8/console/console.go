@@ -97,9 +97,19 @@ func (q *FiLoQueue) Pop() *Instruction {
 
 type Instruction struct {
 	Operation string
-	Value int
-	Visited bool
-	Reverted bool
+	Value     int
+	Visited   bool
+	Reverted  bool
+	Swapped   bool
+}
+
+func (i *Instruction) Swap() {
+	switch i.Operation {
+	case "jmp":
+		i.Operation = "nop"
+	case "nop":
+		i.Operation= "jump"
+	}
 }
 
 func NewConsole() *Console {
