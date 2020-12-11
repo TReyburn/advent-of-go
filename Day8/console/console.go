@@ -107,8 +107,21 @@ func (i *Instruction) Swap() {
 	switch i.Operation {
 	case "jmp":
 		i.Operation = "nop"
+		i.Swapped = true
 	case "nop":
-		i.Operation= "jump"
+		i.Operation= "jmp"
+		i.Swapped = true
+	}
+}
+
+func (i *Instruction) Revert() {
+	switch i.Operation {
+	case "jmp":
+		i.Operation = "nop"
+		i.Swapped = false
+	case "nop":
+		i.Operation= "jmp"
+		i.Swapped = false
 	}
 }
 
