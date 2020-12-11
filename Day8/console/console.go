@@ -116,24 +116,6 @@ func (c *Console) Write(p []byte) (int, error) {
 	return rb, nil
 }
 
-type FiLoQueue struct {
-	Items []*Instruction
-}
-
-func (q *FiLoQueue) Push(i *Instruction) {
-	q.Items = append([]*Instruction{i}, q.Items...)
-}
-
-func (q *FiLoQueue) Pop() *Instruction {
-	i := q.Items[0]
-	if len(q.Items) > 1{
-		q.Items = q.Items[1:]
-	} else {
-		q.Items = make([]*Instruction, 0)
-	}
-	return i
-}
-
 type Instruction struct {
 	Operation string
 	Value     int
@@ -175,6 +157,24 @@ func (i *Instruction) Revert() {
 	}
 }
 
+type LiFoQueue struct {
+	Items []*Instruction
+}
+
+func (q *LiFoQueue) Push(i *Instruction) {
+	q.Items = append([]*Instruction{i}, q.Items...)
+}
+
+func (q *LiFoQueue) Pop() *Instruction {
+	i := q.Items[0]
+	if len(q.Items) > 1{
+		q.Items = q.Items[1:]
+	} else {
+		q.Items = make([]*Instruction, 0)
+	}
+	return i
+}
+
 func NewConsole() *Console {
 	c := Console{
 		Instructions: make([]*Instruction, 0),
@@ -185,8 +185,8 @@ func NewConsole() *Console {
 	return &c
 }
 
-func NewFiLoQueue() *FiLoQueue {
-	q := FiLoQueue{Items: make([]*Instruction, 0)}
+func NewFiLoQueue() *LiFoQueue {
+	q := LiFoQueue{Items: make([]*Instruction, 0)}
 	return &q
 }
 
