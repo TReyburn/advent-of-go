@@ -141,3 +141,30 @@ func TestFiLoQueue_Pop(t *testing.T) {
 	assert.Equal(t, res, i2)
 	assert.Equal(t, len(q.Items), 1)
 }
+
+func TestInstruction_SwapNop(t *testing.T) {
+	i := NewInstruction("nop", 11)
+
+	i.Swap()
+	assert.Equal(t, i.Operation, "jmp")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, true)
+}
+
+func TestInstruction_SwapJmp(t *testing.T) {
+	i := NewInstruction("jmp", 11)
+
+	i.Swap()
+	assert.Equal(t, i.Operation, "nop")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, true)
+}
+
+func TestInstruction_SwapAcc(t *testing.T) {
+	i := NewInstruction("acc", 11)
+
+	i.Swap()
+	assert.Equal(t, i.Operation, "acc")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, false)
+}
