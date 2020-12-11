@@ -11,6 +11,17 @@ type Console struct {
 	Accumulator  int
 }
 
+func (c *Console) DFSDebug() int {
+	q := NewFiLoQueue()
+
+	for {
+		i := c.GetInstruction()
+		q.Push(i)
+		break
+	}
+	return 0
+}
+
 func (c *Console) GetInstruction() *Instruction {
 	return c.Instructions[c.Index]
 }
@@ -103,17 +114,20 @@ type Instruction struct {
 	Swapped   bool
 }
 
-func (i *Instruction) Swap() {
+func (i *Instruction) Swap() bool {
 	if !i.Swapped {
 		switch i.Operation {
 		case "jmp":
 			i.Operation = "nop"
 			i.Swapped = true
+			return true
 		case "nop":
 			i.Operation = "jmp"
 			i.Swapped = true
+			return true
 		}
 	}
+	return false
 }
 
 func (i *Instruction) Revert() {

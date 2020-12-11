@@ -145,51 +145,57 @@ func TestFiLoQueue_Pop(t *testing.T) {
 func TestInstruction_SwapNop(t *testing.T) {
 	i := NewInstruction("nop", 11)
 
-	i.Swap()
+	res := i.Swap()
 	assert.Equal(t, i.Operation, "jmp")
 	assert.Equal(t, i.Value, 11)
 	assert.Equal(t, i.Swapped, true)
+	assert.Equal(t, res, true)
 }
 
 func TestInstruction_SwapJmp(t *testing.T) {
 	i := NewInstruction("jmp", 11)
 
-	i.Swap()
+	res := i.Swap()
 	assert.Equal(t, i.Operation, "nop")
 	assert.Equal(t, i.Value, 11)
 	assert.Equal(t, i.Swapped, true)
+	assert.Equal(t, res, true)
 }
 
 func TestInstruction_SwapAcc(t *testing.T) {
 	i := NewInstruction("acc", 11)
 
-	i.Swap()
+	res := i.Swap()
 	assert.Equal(t, i.Operation, "acc")
 	assert.Equal(t, i.Value, 11)
 	assert.Equal(t, i.Swapped, false)
+	assert.Equal(t, res, false)
 }
 
 func TestInstruction_SwapTwice(t *testing.T) {
 	i := NewInstruction("jmp", 11)
 
-	i.Swap()
+	res := i.Swap()
 	assert.Equal(t, i.Operation, "nop")
 	assert.Equal(t, i.Value, 11)
 	assert.Equal(t, i.Swapped, true)
+	assert.Equal(t, res, true)
 
-	i.Swap()
+	res = i.Swap()
 	assert.Equal(t, i.Operation, "nop")
 	assert.Equal(t, i.Value, 11)
 	assert.Equal(t, i.Swapped, true)
+	assert.Equal(t, res, false)
 }
 
 func TestInstruction_RevertNop(t *testing.T) {
 	i := NewInstruction("nop", 11)
 
-	i.Swap()
+	res := i.Swap()
 	assert.Equal(t, i.Operation, "jmp")
 	assert.Equal(t, i.Value, 11)
 	assert.Equal(t, i.Swapped, true)
+	assert.Equal(t, res, true)
 
 	i.Revert()
 	assert.Equal(t, i.Operation, "nop")
