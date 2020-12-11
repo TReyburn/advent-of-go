@@ -20,6 +20,19 @@ func (d *Decoder) AddKey(n int) error {
 	return nil
 }
 
+func (d *Decoder) Attack() (int, error) {
+	for {
+		res := d.Process()
+		if !res {
+			return d.Remainder[0], nil
+		}
+		err := d.Shift()
+		if err != nil {
+			return -1, err
+		}
+	}
+}
+
 func (d *Decoder) Load(ns []int) error {
 	l := d.Queue.GetMaxLen()
 

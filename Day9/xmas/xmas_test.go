@@ -168,3 +168,17 @@ func TestDecoder_Write(t *testing.T) {
 	assert.Equal(t, 5, len(d.Queue.Queue))
 	assert.Equal(t, 15, len(d.Remainder))
 }
+
+func TestDecoder_Attack(t *testing.T) {
+	d := NewDecoder(5)
+	err := filehandler.LoadInputFile("testdata/test.txt", d)
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
+
+	res, err := d.Attack()
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
+	assert.Equal(t, 127, res)
+}
