@@ -20,4 +20,10 @@ func main() {
 	}
 
 	fmt.Println("Found non-compliant int:", res)
+
+	weak, err := d.BreakCipher(res)
+	if err != nil {
+		log.Fatalln("Unexpected error while breaking cipher", err)
+	}
+	fmt.Println("Secret int to break cipher:", weak)
 }
