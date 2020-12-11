@@ -201,3 +201,22 @@ func TestDecoder_FindSumSet(t *testing.T) {
 	}
 	assert.Equal(t, []int{15, 25, 47, 40}, set)
 }
+
+func TestDecoder_BreakCipher(t *testing.T) {
+	d := NewDecoder(5)
+	err := filehandler.LoadInputFile("testdata/test.txt", d)
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
+
+	res, err := d.Attack()
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
+
+	cipher, err := d.BreakCipher(res)
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
+	assert.Equal(t, 62, cipher)
+}

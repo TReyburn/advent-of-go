@@ -2,6 +2,7 @@ package xmas
 
 import (
 	"errors"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -32,6 +33,15 @@ func (d *Decoder) Attack() (int, error) {
 			return -1, err
 		}
 	}
+}
+
+func (d *Decoder) BreakCipher(n int) (int, error) {
+	res, err := d.FindSumSet(n)
+	if err != nil {
+		return -1, err
+	}
+	sort.Ints(res)
+	return res[0] + res[len(res)-1], nil
 }
 
 func (d *Decoder) FindSumSet(n int) ([]int, error) {
