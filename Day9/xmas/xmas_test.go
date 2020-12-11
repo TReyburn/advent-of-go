@@ -45,10 +45,23 @@ func TestDecoder_LoadNotEnough(t *testing.T) {
 
 func TestDecoder_AddKey(t *testing.T) {
 	d := NewDecoder(0)
-	d.AddKey(1)
+	err := d.AddKey(1)
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
 
 	assert.Equal(t, 1, len(d.Preamble))
 	assert.Equal(t, false, d.Preamble[1])
+}
+
+func TestDecoder_AddKeyAlreadyExists(t *testing.T) {
+	d := NewDecoder(0)
+	err := d.AddKey(1)
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
+	err = d.AddKey(1)
+	assert.Error(t, err, "key already exists")
 }
 
 func TestDecoder_Shift(t *testing.T) {
@@ -119,4 +132,26 @@ func TestDecoder_ShiftCantShift(t *testing.T) {
 	}
 	err = d.Shift()
 	assert.Error(t, err, "no remainder left to shift")
+}
+
+func TestDecoder_ProcessTrue(t *testing.T) {
+	ns := []int{0, 1, 2, 3}
+	d := NewDecoder(3)
+	err := d.Load(ns)
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
+
+	assert.True(t, d.Process())
+}
+
+func TestDecoder_ProcessFalse(t *testing.T) {
+	ns := []int{0, 1, 2, 4}
+	d := NewDecoder(3)
+	err := d.Load(ns)
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
+
+	assert.False(t, d.Process())
 }
