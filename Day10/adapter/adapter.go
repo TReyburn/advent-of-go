@@ -9,7 +9,7 @@ type Adapter struct {
 func (a *Adapter) Load(ns []int) {
 	sort.Ints(ns)
 	a.SortedArray = append(a.SortedArray, ns...)
-	max := a.SortedArray[len(ns)-1] + 3
+	max := a.SortedArray[len(a.SortedArray)-1] + 3
 	a.SortedArray= append(a.SortedArray, max)
 }
 
