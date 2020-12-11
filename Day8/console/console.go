@@ -25,6 +25,7 @@ func (c *Console) Process(i *Instruction) bool {
 		c.Index++
 	case "acc":
 		c.Accumulator += i.Value
+		c.Index++
 	case "jmp":
 		c.Index += i.Value
 	}
