@@ -34,3 +34,19 @@ func TestDecoder_Load(t *testing.T) {
 	assert.Equal(t, 3, len(d.Preamble))
 	assert.Equal(t, 2, len(d.Remainder))
 }
+
+func TestDecoder_LoadNotEnough(t *testing.T) {
+	ns := []int{0, 1, 2, 3, 4}
+	d := NewDecoder(5)
+	err := d.Load(ns)
+	assert.Error(t, err, "int slice is too short to load")
+
+}
+
+func TestDecoder_AddKey(t *testing.T) {
+	d := NewDecoder(0)
+	d.AddKey(1)
+
+	assert.Equal(t, 1, len(d.Preamble))
+	assert.Equal(t, false, d.Preamble[1])
+}
