@@ -37,6 +37,17 @@ func (c *Console) Process(i *Instruction) bool {
 	return false
 }
 
+func (c *Console) Run() int {
+	for {
+		i := c.GetInstruction()
+		b := c.Process(i)
+		if b {
+			break
+		}
+	}
+	return c.Accumulator
+}
+
 func (c *Console) Write(p []byte) (int, error) {
 	rb := len(p)
 	rawStr := string(p)

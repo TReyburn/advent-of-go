@@ -89,3 +89,15 @@ func TestConsole_ProcessMiniRun(t *testing.T) {
 	assert.Equal(t, c.Index, 6)
 	assert.Equal(t, c.Accumulator, 1)
 }
+
+func TestConsole_Run(t *testing.T) {
+	c := NewConsole()
+	err := filehandler.LoadInputFile("testdata/input.txt", c)
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
+
+	res := c.Run()
+
+	assert.Equal(t, res, 5)
+}
