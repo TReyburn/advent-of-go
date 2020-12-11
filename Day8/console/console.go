@@ -122,9 +122,11 @@ func (i *Instruction) Revert() {
 		case "jmp":
 			i.Operation = "nop"
 			i.Swapped = false
+			i.Reverted = true
 		case "nop":
 			i.Operation = "jmp"
 			i.Swapped = false
+			i.Reverted = true
 		}
 	}
 }
