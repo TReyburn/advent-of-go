@@ -66,3 +66,26 @@ func TestConsole_Write(t *testing.T) {
 
 	assert.Equal(t, len(c.Instructions), 9)
 }
+
+func TestConsole_ProcessMiniRun(t *testing.T) {
+	c := NewConsole()
+	err := filehandler.LoadInputFile("testdata/input.txt", c)
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
+
+	i := c.GetInstruction()
+	c.Process(i)
+	assert.Equal(t, c.Index, 1)
+	assert.Equal(t, c.Accumulator, 0)
+
+	i = c.GetInstruction()
+	c.Process(i)
+	assert.Equal(t, c.Index, 2)
+	assert.Equal(t, c.Accumulator, 1)
+
+	i = c.GetInstruction()
+	c.Process(i)
+	assert.Equal(t, c.Index, 6)
+	assert.Equal(t, c.Accumulator, 1)
+}
