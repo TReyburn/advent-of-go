@@ -3,6 +3,8 @@ package adapter
 import (
 	"errors"
 	"sort"
+	"strconv"
+	"strings"
 )
 
 type Adapter struct {
@@ -31,6 +33,24 @@ func (a *Adapter) Summarize() (map[int]int, error) {
 		prev = val
 	}
 	return res, nil
+}
+
+func (a *Adapter) Write(p []byte) (int, error) {
+	rb := len(p)
+	ns := make([]int, 0)
+	rawStr := string(p)
+	split := strings.Split(rawStr, "\r\n")
+	for _, str := range split {
+		if str != "" {
+			n, err := strconv.Atoi(str)
+			if err != nil {
+				return 0, err
+			}
+			ns = append(ns, n)
+		}
+	}
+	a.Load(ns)
+	return rb, nil
 }
 
 func NewAdapter() *Adapter {

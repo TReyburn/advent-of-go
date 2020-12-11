@@ -1,6 +1,7 @@
 package adapter
 
 import (
+	"github.com/TReyburn/advent-of-go/common/filehandler"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -25,4 +26,19 @@ func TestAdapter_Summarize(t *testing.T) {
 
 	assert.Equal(t, 7, res[1])
 	assert.Equal(t, 5, res[3])
+}
+
+func TestAdapter_Write(t *testing.T) {
+	a := NewAdapter()
+	err := filehandler.LoadInputFile("testdata/test.txt", a)
+	if err != nil {
+		t.Error("Unexpected error loading file:", err)
+	}
+	res, err := a.Summarize()
+	if err != nil {
+		t.Error("Unexpected error while summarizing:", err)
+	}
+
+	assert.Equal(t, 22, res[1])
+	assert.Equal(t, 10, res[3])
 }
