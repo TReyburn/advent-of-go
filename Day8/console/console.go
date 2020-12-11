@@ -126,7 +126,11 @@ func (q *FiLoQueue) Push(i *Instruction) {
 
 func (q *FiLoQueue) Pop() *Instruction {
 	i := q.Items[0]
-	q.Items = q.Items[1:]
+	if len(q.Items) > 1{
+		q.Items = q.Items[1:]
+	} else {
+		q.Items = make([]*Instruction, 0)
+	}
 	return i
 }
 
