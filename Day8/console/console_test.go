@@ -114,7 +114,7 @@ func TestConsole_Revert(t *testing.T) {
 	c.Revert(i)
 	assert.Equal(t, c.Accumulator, 0)
 	assert.Equal(t, c.Index, 0)
-	assert.Equal(t, i.Reverted, true)
+	assert.Equal(t, i.Reverted, false)
 }
 
 func TestFiLoQueue_Push(t *testing.T) {
@@ -253,4 +253,37 @@ func TestInstruction_Revert(t *testing.T) {
 	assert.Equal(t, i.Value, 11)
 	assert.Equal(t, i.Swapped, false)
 	assert.Equal(t, i.Reverted, true)
+}
+
+func TestInstruction_SwapPreviouslyReverted(t *testing.T) {
+	i := NewInstruction("jmp", 11)
+
+	b := i.Swap()
+	assert.Equal(t, i.Operation, "nop")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, true)
+	assert.Equal(t, b, true)
+
+	i.Revert()
+	assert.Equal(t, i.Operation, "jmp")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, false)
+	assert.Equal(t, i.Reverted, true)
+
+	b = i.Swap()
+	assert.Equal(t, i.Operation, "jmp")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, false)
+	assert.Equal(t, b, false)
+}
+
+func TestConsole_DFSDebug(t *testing.T) {
+	c := NewConsole()
+	err := filehandler.LoadInputFile("testdata/input.txt", c)
+	if err != nil {
+		t.Error("Unexpected error loading file:", err)
+	}
+
+	res := c.DFSDebug()
+	assert.Equal(t, res, 8)
 }

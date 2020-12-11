@@ -9,17 +9,42 @@ type Console struct {
 	Instructions []*Instruction
 	Index        int
 	Accumulator  int
+	SwapPoint	 *Instruction
 }
 
 func (c *Console) DFSDebug() int {
 	q := NewFiLoQueue()
 
 	for {
+		if c.Index >= len(c.Instructions) {
+			break
+		}
 		i := c.GetInstruction()
-		q.Push(i)
-		break
+		b := c.Process(i)
+		if b {
+			for {
+				if c.SwapPoint != nil {
+					i = q.Pop()
+					c.Revert(i)
+					if i == c.SwapPoint {
+						i.Revert()
+						c.SwapPoint = nil
+					}
+				} else {
+					i = q.Pop()
+					c.Revert(i)
+					b = i.Swap()
+					if b {
+						c.SwapPoint = i
+						break
+					}
+				}
+			}
+		} else {
+			q.Push(i)
+		}
 	}
-	return 0
+	return c.Accumulator
 }
 
 func (c *Console) GetInstruction() *Instruction {
@@ -50,7 +75,6 @@ func (c *Console) Process(i *Instruction) bool {
 
 func (c *Console) Revert(i *Instruction) {
 	i.Visited = false
-	i.Reverted = true
 	switch i.Operation {
 	case "nop":
 		c.Index--
@@ -115,16 +139,18 @@ type Instruction struct {
 }
 
 func (i *Instruction) Swap() bool {
-	if !i.Swapped {
-		switch i.Operation {
-		case "jmp":
-			i.Operation = "nop"
-			i.Swapped = true
-			return true
-		case "nop":
-			i.Operation = "jmp"
-			i.Swapped = true
-			return true
+	if !i.Reverted {
+		if !i.Swapped {
+			switch i.Operation {
+			case "jmp":
+				i.Operation = "nop"
+				i.Swapped = true
+				return true
+			case "nop":
+				i.Operation = "jmp"
+				i.Swapped = true
+				return true
+			}
 		}
 	}
 	return false
@@ -150,6 +176,7 @@ func NewConsole() *Console {
 		Instructions: make([]*Instruction, 0),
 		Index:        0,
 		Accumulator:  0,
+		SwapPoint: 	  nil,
 	}
 	return &c
 }
