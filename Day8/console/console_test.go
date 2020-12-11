@@ -182,3 +182,69 @@ func TestInstruction_SwapTwice(t *testing.T) {
 	assert.Equal(t, i.Value, 11)
 	assert.Equal(t, i.Swapped, true)
 }
+
+func TestInstruction_RevertNop(t *testing.T) {
+	i := NewInstruction("nop", 11)
+
+	i.Swap()
+	assert.Equal(t, i.Operation, "jmp")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, true)
+
+	i.Revert()
+	assert.Equal(t, i.Operation, "nop")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, false)
+	assert.Equal(t, i.Reverted, true)
+}
+
+func TestInstruction_RevertJmp(t *testing.T) {
+	i := NewInstruction("jmp", 11)
+
+	i.Swap()
+	assert.Equal(t, i.Operation, "nop")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, true)
+
+	i.Revert()
+	assert.Equal(t, i.Operation, "jmp")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, false)
+	assert.Equal(t, i.Reverted, true)
+}
+
+func TestInstruction_RevertAcc(t *testing.T) {
+	i := NewInstruction("acc", 11)
+
+	i.Swap()
+	assert.Equal(t, i.Operation, "acc")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, false)
+
+	i.Revert()
+	assert.Equal(t, i.Operation, "acc")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, false)
+	assert.Equal(t, i.Reverted, false)
+}
+
+func TestInstruction_Revert(t *testing.T) {
+	i := NewInstruction("jmp", 11)
+
+	i.Swap()
+	assert.Equal(t, i.Operation, "nop")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, true)
+
+	i.Revert()
+	assert.Equal(t, i.Operation, "jmp")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, false)
+	assert.Equal(t, i.Reverted, true)
+
+	i.Revert()
+	assert.Equal(t, i.Operation, "jmp")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, false)
+	assert.Equal(t, i.Reverted, true)
+}
