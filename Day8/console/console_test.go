@@ -168,3 +168,17 @@ func TestInstruction_SwapAcc(t *testing.T) {
 	assert.Equal(t, i.Value, 11)
 	assert.Equal(t, i.Swapped, false)
 }
+
+func TestInstruction_SwapTwice(t *testing.T) {
+	i := NewInstruction("jmp", 11)
+
+	i.Swap()
+	assert.Equal(t, i.Operation, "nop")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, true)
+
+	i.Swap()
+	assert.Equal(t, i.Operation, "nop")
+	assert.Equal(t, i.Value, 11)
+	assert.Equal(t, i.Swapped, true)
+}

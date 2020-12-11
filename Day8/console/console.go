@@ -7,8 +7,8 @@ import (
 
 type Console struct {
 	Instructions []*Instruction
-	Index int
-	Accumulator int
+	Index        int
+	Accumulator  int
 }
 
 func (c *Console) GetInstruction() *Instruction {
@@ -104,24 +104,28 @@ type Instruction struct {
 }
 
 func (i *Instruction) Swap() {
-	switch i.Operation {
-	case "jmp":
-		i.Operation = "nop"
-		i.Swapped = true
-	case "nop":
-		i.Operation= "jmp"
-		i.Swapped = true
+	if !i.Swapped {
+		switch i.Operation {
+		case "jmp":
+			i.Operation = "nop"
+			i.Swapped = true
+		case "nop":
+			i.Operation = "jmp"
+			i.Swapped = true
+		}
 	}
 }
 
 func (i *Instruction) Revert() {
-	switch i.Operation {
-	case "jmp":
-		i.Operation = "nop"
-		i.Swapped = false
-	case "nop":
-		i.Operation= "jmp"
-		i.Swapped = false
+	if i.Swapped {
+		switch i.Operation {
+		case "jmp":
+			i.Operation = "nop"
+			i.Swapped = false
+		case "nop":
+			i.Operation = "jmp"
+			i.Swapped = false
+		}
 	}
 }
 
