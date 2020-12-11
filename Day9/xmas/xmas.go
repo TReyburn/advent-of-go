@@ -9,7 +9,7 @@ type Decoder struct {
 }
 
 func (d *Decoder) Load(ns []int) error {
-	l := d.Queue.GetLen()
+	l := d.Queue.GetMaxLen()
 
 	if l >= len(ns) {
 		return errors.New("int slice is too short to load")
@@ -18,9 +18,7 @@ func (d *Decoder) Load(ns []int) error {
 		d.Queue.Load(n)
 		d.Preamble[n] = false
 	}
-	for _, n := range ns[l:] {
-		d.Remainder = append(d.Remainder, n)
-	}
+	d.Remainder = append(d.Remainder, ns[l:]...)
 	return nil
 }
 
@@ -29,7 +27,7 @@ type FixedQueue struct {
 	Queue []int
 }
 
-func (q *FixedQueue) GetLen() int {
+func (q *FixedQueue) GetMaxLen() int {
 	return q.Len
 }
 
