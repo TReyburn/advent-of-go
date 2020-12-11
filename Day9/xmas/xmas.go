@@ -7,6 +7,7 @@ import (
 )
 
 type Decoder struct {
+	Orig []int
 	Queue *FixedQueue
 	Preamble map[int]bool
 	Remainder []int
@@ -44,6 +45,7 @@ func (d *Decoder) Load(ns []int) error {
 		d.Preamble[n] = false
 	}
 	d.Remainder = append(d.Remainder, ns[l:]...)
+	d.Orig = ns
 	return nil
 }
 
