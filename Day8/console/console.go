@@ -1,5 +1,10 @@
 package console
 
+import (
+	"strconv"
+	"strings"
+)
+
 type Console struct {
 	Instructions []*Instruction
 	Index int
@@ -30,6 +35,24 @@ func (c *Console) Process(i *Instruction) bool {
 		c.Index += i.Value
 	}
 	return false
+}
+
+func (c *Console) Write(p []byte) (int, error) {
+	rb := len(p)
+	rawStr := string(p)
+	split := strings.Split(rawStr, "\r\n")
+	for _, s := range split {
+		if s != "" {
+			inS := strings.Split(s, " ")
+			inN, err := strconv.Atoi(inS[1])
+			if err != nil {
+				return 0, err
+			}
+			i := NewInstruction(inS[0], inN)
+			c.LoadInstruction(i)
+		}
+	}
+	return rb, nil
 }
 
 type Instruction struct {

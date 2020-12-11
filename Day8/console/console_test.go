@@ -1,6 +1,7 @@
 package console
 
 import (
+	"github.com/TReyburn/advent-of-go/common/filehandler"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -54,4 +55,14 @@ func TestConsole_ProcessJmp(t *testing.T) {
 
 	assert.Equal(t, c.Index, 4)
 	assert.Equal(t, c.Accumulator, 0)
+}
+
+func TestConsole_Write(t *testing.T) {
+	c := NewConsole()
+	err := filehandler.LoadInputFile("testdata/input.txt", c)
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
+
+	assert.Equal(t, len(c.Instructions), 9)
 }
