@@ -10,8 +10,12 @@ type Decoder struct {
 	Remainder []int
 }
 
-func (d *Decoder) AddKey(n int) {
+func (d *Decoder) AddKey(n int) error {
+	if _, ok := d.Preamble[n]; ok {
+		return errors.New("key already exists")
+	}
 	d.Preamble[n] = false
+	return nil
 }
 
 func (d *Decoder) Load(ns []int) error {
@@ -28,13 +32,30 @@ func (d *Decoder) Load(ns []int) error {
 	return nil
 }
 
+func (d *Decoder) Process() bool {
+	sum := d.Remainder[0]
+
+	for k := range d.Preamble {
+		search := sum - k
+		if search != k {
+			if _, ok := d.Preamble[search]; ok {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 func (d *Decoder) Shift() error {
 	l := len(d.Remainder)
 	if l == 0 {
 		return errors.New("no remainder left to shift")
 	}
 	addKey := d.Remainder[0]
-	d.AddKey(addKey)
+	err := d.AddKey(addKey)
+	if err != nil {
+		return err
+	}
 	if l >= 2 {
 		d.Remainder = append(d.Remainder[:0], d.Remainder[1:]...)
 	} else {
