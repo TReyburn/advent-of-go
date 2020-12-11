@@ -118,7 +118,7 @@ func TestConsole_Revert(t *testing.T) {
 }
 
 func TestFiLoQueue_Push(t *testing.T) {
-	q := NewFiLoQueue()
+	q := NewLiFoQueue()
 	i1 := NewInstruction("Insert1", 1)
 	i2 := NewInstruction("Insert2", 2)
 
@@ -130,7 +130,7 @@ func TestFiLoQueue_Push(t *testing.T) {
 }
 
 func TestFiLoQueue_Pop(t *testing.T) {
-	q := NewFiLoQueue()
+	q := NewLiFoQueue()
 	i1 := NewInstruction("Insert1", 1)
 	i2 := NewInstruction("Insert2", 2)
 

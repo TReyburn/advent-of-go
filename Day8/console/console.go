@@ -13,7 +13,7 @@ type Console struct {
 }
 
 func (c *Console) DFSDebug() int {
-	q := NewFiLoQueue()
+	q := NewLiFoQueue()
 
 	for {
 		if c.Index >= len(c.Instructions) {
@@ -24,6 +24,7 @@ func (c *Console) DFSDebug() int {
 		if b {
 			for {
 				if c.SwapPoint != nil {
+					// Backtrack to swap point
 					i = q.Pop()
 					c.Revert(i)
 					if i == c.SwapPoint {
@@ -31,6 +32,7 @@ func (c *Console) DFSDebug() int {
 						c.SwapPoint = nil
 					}
 				} else {
+					// Backtrack until we can swap
 					i = q.Pop()
 					c.Revert(i)
 					b = i.Swap()
@@ -41,6 +43,7 @@ func (c *Console) DFSDebug() int {
 				}
 			}
 		} else {
+			// We only want to push into Q if !b
 			q.Push(i)
 		}
 	}
@@ -58,9 +61,8 @@ func (c *Console) LoadInstruction(i *Instruction) {
 func (c *Console) Process(i *Instruction) bool {
 	if i.Visited {
 		return true
-	} else {
-		i.Visited = true
 	}
+	i.Visited = true
 	switch i.Operation {
 	case "nop":
 		c.Index++
@@ -185,7 +187,7 @@ func NewConsole() *Console {
 	return &c
 }
 
-func NewFiLoQueue() *LiFoQueue {
+func NewLiFoQueue() *LiFoQueue {
 	q := LiFoQueue{Items: make([]*Instruction, 0)}
 	return &q
 }
