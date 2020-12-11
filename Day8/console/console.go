@@ -39,6 +39,7 @@ func (c *Console) Process(i *Instruction) bool {
 
 func (c *Console) Revert(i *Instruction) {
 	i.Visited = false
+	i.Reverted = true
 	switch i.Operation {
 	case "nop":
 		c.Index--
@@ -98,6 +99,7 @@ type Instruction struct {
 	Operation string
 	Value int
 	Visited bool
+	Reverted bool
 }
 
 func NewConsole() *Console {
@@ -119,6 +121,7 @@ func NewInstruction(op string, val int) *Instruction {
 		Operation: op,
 		Value:     val,
 		Visited:   false,
+		Reverted:  false,
 	}
 	return &i
 }

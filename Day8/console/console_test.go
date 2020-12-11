@@ -109,10 +109,12 @@ func TestConsole_Revert(t *testing.T) {
 	c.Process(i)
 	assert.Equal(t, c.Accumulator, 15)
 	assert.Equal(t, c.Index, 1)
+	assert.Equal(t, i.Reverted, false)
 
 	c.Revert(i)
 	assert.Equal(t, c.Accumulator, 0)
 	assert.Equal(t, c.Index, 0)
+	assert.Equal(t, i.Reverted, true)
 }
 
 func TestFiLoQueue_Push(t *testing.T) {
