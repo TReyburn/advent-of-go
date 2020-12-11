@@ -37,6 +37,20 @@ func (c *Console) Process(i *Instruction) bool {
 	return false
 }
 
+func (c *Console) Revert(i *Instruction) {
+	i.Visited = false
+	switch i.Operation {
+	case "nop":
+		c.Index--
+	case "acc":
+		c.Accumulator -= i.Value
+		c.Index--
+	case "jmp":
+		c.Index -= i.Value
+	}
+
+}
+
 func (c *Console) Run() int {
 	for {
 		i := c.GetInstruction()
@@ -66,6 +80,20 @@ func (c *Console) Write(p []byte) (int, error) {
 	return rb, nil
 }
 
+type FiLoQueue struct {
+	Items []*Instruction
+}
+
+func (q *FiLoQueue) Push(i *Instruction) {
+	q.Items = append([]*Instruction{i}, q.Items...)
+}
+
+func (q *FiLoQueue) Pop() *Instruction {
+	i := q.Items[0]
+	q.Items = q.Items[1:]
+	return i
+}
+
 type Instruction struct {
 	Operation string
 	Value int
@@ -79,6 +107,11 @@ func NewConsole() *Console {
 		Accumulator:  0,
 	}
 	return &c
+}
+
+func NewFiLoQueue() *FiLoQueue {
+	q := FiLoQueue{Items: make([]*Instruction, 0)}
+	return &q
 }
 
 func NewInstruction(op string, val int) *Instruction {
