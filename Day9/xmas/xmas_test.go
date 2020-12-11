@@ -1,6 +1,7 @@
 package xmas
 
 import (
+	"github.com/TReyburn/advent-of-go/common/filehandler"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -154,4 +155,16 @@ func TestDecoder_ProcessFalse(t *testing.T) {
 	}
 
 	assert.False(t, d.Process())
+}
+
+func TestDecoder_Write(t *testing.T) {
+	d := NewDecoder(5)
+	err := filehandler.LoadInputFile("testdata/test.txt", d)
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
+
+	assert.Equal(t, 5, len(d.Preamble))
+	assert.Equal(t, 5, len(d.Queue.Queue))
+	assert.Equal(t, 15, len(d.Remainder))
 }

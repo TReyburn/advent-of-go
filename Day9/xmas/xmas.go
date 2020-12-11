@@ -2,6 +2,8 @@ package xmas
 
 import (
 	"errors"
+	"strconv"
+	"strings"
 )
 
 type Decoder struct {
@@ -65,6 +67,27 @@ func (d *Decoder) Shift() error {
 	delete(d.Preamble, removeKey)
 	d.Queue.Load(addKey)
 	return nil
+}
+
+func (d *Decoder) Write(p []byte) (int, error) {
+	rb := len(p)
+	ns := make([]int, 0)
+	rawStr := string(p)
+	split := strings.Split(rawStr, "\r\n")
+	for _, str := range split {
+		if str != "" {
+			n, err := strconv.Atoi(str)
+			if err != nil {
+				return 0, err
+			}
+			ns = append(ns, n)
+		}
+	}
+	err := d.Load(ns)
+	if err != nil {
+		return 0, err
+	}
+	return rb, nil
 }
 
 type FixedQueue struct {
