@@ -34,6 +34,30 @@ func (d *Decoder) Attack() (int, error) {
 	}
 }
 
+func (d *Decoder) FindSumSet(n int) ([]int, error) {
+	maxIdx := len(d.Orig) - 1
+
+	for idx, num := range d.Orig {
+		tempIdx := idx + 1
+		res := []int{num}
+		for {
+			if tempIdx > maxIdx {
+				return nil, errors.New("could not find sum set")
+			}
+			num += d.Orig[tempIdx]
+			res = append(res, d.Orig[tempIdx])
+			tempIdx++
+			if num == n {
+				return res, nil
+			}
+			if num > n {
+				break
+			}
+		}
+	}
+	return nil,  errors.New("could not find sum set")
+}
+
 func (d *Decoder) Load(ns []int) error {
 	l := d.Queue.GetMaxLen()
 

@@ -182,3 +182,22 @@ func TestDecoder_Attack(t *testing.T) {
 	}
 	assert.Equal(t, 127, res)
 }
+
+func TestDecoder_FindSumSet(t *testing.T) {
+	d := NewDecoder(5)
+	err := filehandler.LoadInputFile("testdata/test.txt", d)
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
+
+	res, err := d.Attack()
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
+
+	set, err := d.FindSumSet(res)
+	if err != nil {
+		t.Error("Unexpected error:", err)
+	}
+	assert.Equal(t, []int{15, 25, 47, 40}, set)
+}
