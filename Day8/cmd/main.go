@@ -9,7 +9,7 @@ import (
 
 func main() {
 	c := console.NewConsole()
-	err := filehandler.LoadInputFile("C:/Users/Travis/advent-of-go/Day8/assets/input.txt", c)
+	err := filehandler.LoadInputFile("assets/input.txt", c)
 	if err != nil {
 		log.Fatalln("Unexpected error reading file:", err)
 	}
@@ -17,7 +17,7 @@ func main() {
 	fmt.Println("Accumulator amount before repeat:", res)
 
 	c1 := console.NewConsole()
-	err = filehandler.LoadInputFile("C:/Users/Travis/advent-of-go/Day8/assets/input.txt", c1)
+	err = filehandler.LoadInputFile("assets/input.txt", c1)
 	if err != nil {
 		log.Fatalln("Unexpected error reading file:", err)
 	}
