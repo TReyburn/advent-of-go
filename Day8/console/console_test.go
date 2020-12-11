@@ -101,3 +101,41 @@ func TestConsole_Run(t *testing.T) {
 
 	assert.Equal(t, res, 5)
 }
+
+func TestConsole_Revert(t *testing.T) {
+	c := NewConsole()
+	i := NewInstruction("acc", 15)
+
+	c.Process(i)
+	assert.Equal(t, c.Accumulator, 15)
+	assert.Equal(t, c.Index, 1)
+
+	c.Revert(i)
+	assert.Equal(t, c.Accumulator, 0)
+	assert.Equal(t, c.Index, 0)
+}
+
+func TestFiLoQueue_Push(t *testing.T) {
+	q := NewFiLoQueue()
+	i1 := NewInstruction("Insert1", 1)
+	i2 := NewInstruction("Insert2", 2)
+
+	q.Push(i1)
+	q.Push(i2)
+
+	assert.Equal(t, q.Items[0], i2)
+	assert.Equal(t, q.Items[1], i1)
+}
+
+func TestFiLoQueue_Pop(t *testing.T) {
+	q := NewFiLoQueue()
+	i1 := NewInstruction("Insert1", 1)
+	i2 := NewInstruction("Insert2", 2)
+
+	q.Push(i1)
+	q.Push(i2)
+
+	res := q.Pop()
+	assert.Equal(t, res, i2)
+	assert.Equal(t, len(q.Items), 1)
+}
