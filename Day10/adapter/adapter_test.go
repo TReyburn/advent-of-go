@@ -95,3 +95,23 @@ func TestAdapter_BFSSummarize2(t *testing.T) {
 	res := a.BFSSummarize()
 	assert.Equal(t, 19208, res)
 }
+
+func TestAdapter_SimpleStepPossibilitiesCounter(t *testing.T) {
+	ns := []int{16, 10, 15, 5, 1, 11, 7, 19, 6, 12, 4}
+	a := NewAdapter()
+	a.Load(ns)
+
+	res := a.SimpleStepPossibilitiesCounter()
+	assert.Equal(t, 8, res)
+}
+
+func TestAdapter_SimpleStepPossibilitiesCounter2(t *testing.T) {
+	a := NewAdapter()
+	err := filehandler.LoadInputFile("testdata/test.txt", a)
+	if err != nil {
+		t.Error("Unexpected error loading file:", err)
+	}
+
+	res := a.SimpleStepPossibilitiesCounter()
+	assert.Equal(t, 19208, res)
+}

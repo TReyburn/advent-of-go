@@ -51,6 +51,7 @@ func (a *Adapter) Summarize() (map[int]int, error) {
 }
 
 func (a *Adapter) BFSSummarize() int {
+	// This is terribly inefficient. Tried to add branch pruning - got way over complicated. Just KISS...
 	counter := 0
 	startNode := NewNode(0, 0)
 	q := NewQueue()
@@ -67,6 +68,21 @@ func (a *Adapter) BFSSummarize() int {
 		}
 	}
 	return counter
+}
+
+func (a *Adapter) SimpleStepPossibilitiesCounter() int {
+	stepCounter := make(map[int]int, 0)
+	stepCounter[0] = 1
+
+	for i:= 0; i < len(a.SortedArray); i++ {
+		for j := i + 1; j < len(a.SortedArray); j++ {
+			if a.SortedArray[j] > a.SortedArray[i] + 3 {
+				break
+			}
+			stepCounter[j] += stepCounter[i]
+		}
+	}
+	return stepCounter[len(a.SortedArray)-1]
 }
 
 func (a *Adapter) Write(p []byte) (int, error) {
