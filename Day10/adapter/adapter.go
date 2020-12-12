@@ -11,6 +11,12 @@ type Adapter struct {
 	SortedArray []int
 }
 
+func (a *Adapter) GetEdges(*Node) []*Node {
+	res := make([]Node, 0)
+	idx
+	for idx, val := range a.SortedArray[idx]
+}
+
 func (a *Adapter) Load(ns []int) {
 	sort.Ints(ns)
 	a.SortedArray = append(a.SortedArray, ns...)
@@ -35,6 +41,10 @@ func (a *Adapter) Summarize() (map[int]int, error) {
 	return res, nil
 }
 
+func (a *Adapter) DFSSummarize() (int, error) {
+
+}
+
 func (a *Adapter) Write(p []byte) (int, error) {
 	rb := len(p)
 	ns := make([]int, 0)
@@ -53,25 +63,45 @@ func (a *Adapter) Write(p []byte) (int, error) {
 	return rb, nil
 }
 
-type LiFoQueue struct {
-	Items []int
+type Node struct {
+	Index int
+	Value int
+	Visited bool
 }
 
-func (q *LiFoQueue) Pop() int {
+type LiFoQueue struct {
+	Items []*Node
+}
+
+func (q *LiFoQueue) Pop() *Node {
 	i := q.Items[0]
 	if len(q.Items) > 1{
 		q.Items = q.Items[1:]
 	} else {
-		q.Items = make([]int, 0)
+		q.Items = make([]*Node, 0)
 	}
 	return i
 }
 
-func (q *LiFoQueue) Push(n int) {
-	q.Items = append([]int{n}, q.Items...)
+func (q *LiFoQueue) Push(n *Node) {
+	q.Items = append([]*Node{n}, q.Items...)
 }
 
 func NewAdapter() *Adapter {
 	a := Adapter{SortedArray: []int{0}}
 	return &a
+}
+
+func NewQueue() *LiFoQueue {
+	q := LiFoQueue{Items: make([]*Node, 0)}
+	return &q
+}
+
+func NewNode(idx int, val int) *Node {
+	n := Node{
+		Index:   idx,
+		Value:   val,
+		Visited: false,
+	}
+	return &n
 }
