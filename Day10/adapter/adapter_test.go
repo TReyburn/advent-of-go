@@ -84,3 +84,14 @@ func TestAdapter_BFSSummarize(t *testing.T) {
 	res := a.BFSSummarize()
 	assert.Equal(t, 8, res)
 }
+
+func TestAdapter_BFSSummarize2(t *testing.T) {
+	a := NewAdapter()
+	err := filehandler.LoadInputFile("testdata/test.txt", a)
+	if err != nil {
+		t.Error("Unexpected error loading file:", err)
+	}
+
+	res := a.BFSSummarize()
+	assert.Equal(t, 19208, res)
+}
