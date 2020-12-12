@@ -62,3 +62,16 @@ func TestAdapter_GetEdgesLastNode(t *testing.T) {
 	res := a.GetEdges(n)
 	assert.Equal(t, 0, len(res))
 }
+
+func TestLiFoQueue_BulkPush(t *testing.T) {
+	ns := []int{1, 2, 4}
+	a := NewAdapter()
+	a.Load(ns)
+
+	n := NewNode(0, 0)
+	res := a.GetEdges(n)
+	q := NewQueue()
+	q.BulkPush(res)
+
+	assert.Equal(t, 2, len(q.Items))
+}

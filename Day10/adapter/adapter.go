@@ -51,6 +51,10 @@ func (a *Adapter) Summarize() (map[int]int, error) {
 }
 
 //func (a *Adapter) BFSSummarize() (int, error) {
+//	counter := 0
+//	startNode := NewNode(0, 0)
+//	q := NewQueue()
+//	q.Push(startNode)
 //
 //}
 
@@ -94,6 +98,12 @@ func (q *LiFoQueue) Pop() *Node {
 
 func (q *LiFoQueue) Push(n *Node) {
 	q.Items = append([]*Node{n}, q.Items...)
+}
+
+func (q *LiFoQueue) BulkPush(ns []*Node) {
+	for _, n := range ns {
+		q.Push(n)
+	}
 }
 
 func NewAdapter() *Adapter {
