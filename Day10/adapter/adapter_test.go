@@ -42,3 +42,23 @@ func TestAdapter_Write(t *testing.T) {
 	assert.Equal(t, 22, res[1])
 	assert.Equal(t, 10, res[3])
 }
+
+func TestAdapter_GetEdges(t *testing.T) {
+	ns := []int{1, 2, 4}
+	a := NewAdapter()
+	a.Load(ns)
+
+	n := NewNode(0, 0)
+	res := a.GetEdges(n)
+	assert.Equal(t, 2, len(res))
+}
+
+func TestAdapter_GetEdgesLastNode(t *testing.T) {
+	ns := []int{1, 2, 4}
+	a := NewAdapter()
+	a.Load(ns)
+
+	n := NewNode(4, 7)
+	res := a.GetEdges(n)
+	assert.Equal(t, 0, len(res))
+}

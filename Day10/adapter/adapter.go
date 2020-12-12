@@ -11,10 +11,19 @@ type Adapter struct {
 	SortedArray []int
 }
 
-func (a *Adapter) GetEdges(*Node) []*Node {
-	res := make([]Node, 0)
-	idx
-	for idx, val := range a.SortedArray[idx]
+func (a *Adapter) GetEdges(n *Node) []*Node {
+	res := make([]*Node, 0)
+	if n.Index >= len(a.SortedArray) - 1 {
+		return res
+	}
+	for idx, val := range a.SortedArray[n.Index+1:] {
+		if val > n.Value + 3 {
+			return res
+		}
+		nn := NewNode(idx + n.Index+1, val)
+		res = append(res, nn)
+	}
+	return res
 }
 
 func (a *Adapter) Load(ns []int) {
@@ -41,9 +50,9 @@ func (a *Adapter) Summarize() (map[int]int, error) {
 	return res, nil
 }
 
-func (a *Adapter) DFSSummarize() (int, error) {
-
-}
+//func (a *Adapter) BFSSummarize() (int, error) {
+//
+//}
 
 func (a *Adapter) Write(p []byte) (int, error) {
 	rb := len(p)
