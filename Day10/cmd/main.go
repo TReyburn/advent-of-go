@@ -9,7 +9,7 @@ import (
 
 func main() {
 	a := adapter.NewAdapter()
-	err := filehandler.LoadInputFile("assets/input.txt", a)
+	err := filehandler.LoadInputFile("C:/Users/Travis/advent-of-go/Day10/assets/input.txt", a)
 	if err != nil {
 		log.Fatalln("Unexpected error while loading file:", err)
 	}
@@ -20,4 +20,7 @@ func main() {
 	}
 	fmt.Println(res)
 	fmt.Println("Jolts multiplies:", res[1]*res[3])
+
+	res2 := a.SimpleStepPossibilitiesCounter()
+	fmt.Println("All potential combos:", res2)
 }
