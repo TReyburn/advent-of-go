@@ -53,6 +53,24 @@ func (a *Adapter) Write(p []byte) (int, error) {
 	return rb, nil
 }
 
+type LiFoQueue struct {
+	Items []int
+}
+
+func (q *LiFoQueue) Pop() int {
+	i := q.Items[0]
+	if len(q.Items) > 1{
+		q.Items = q.Items[1:]
+	} else {
+		q.Items = make([]int, 0)
+	}
+	return i
+}
+
+func (q *LiFoQueue) Push(n int) {
+	q.Items = append([]int{n}, q.Items...)
+}
+
 func NewAdapter() *Adapter {
 	a := Adapter{SortedArray: []int{0}}
 	return &a
