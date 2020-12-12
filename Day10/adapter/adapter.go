@@ -50,13 +50,24 @@ func (a *Adapter) Summarize() (map[int]int, error) {
 	return res, nil
 }
 
-//func (a *Adapter) BFSSummarize() (int, error) {
-//	counter := 0
-//	startNode := NewNode(0, 0)
-//	q := NewQueue()
-//	q.Push(startNode)
-//
-//}
+func (a *Adapter) BFSSummarize() int {
+	counter := 0
+	startNode := NewNode(0, 0)
+	q := NewQueue()
+	q.Push(startNode)
+	end := a.SortedArray[len(a.SortedArray) - 1]
+
+	for len(q.Items) > 0 {
+		n := q.Pop()
+		if n.Value == end {
+			counter++
+		} else {
+			edges := a.GetEdges(n)
+			q.BulkPush(edges)
+		}
+	}
+	return counter
+}
 
 func (a *Adapter) Write(p []byte) (int, error) {
 	rb := len(p)

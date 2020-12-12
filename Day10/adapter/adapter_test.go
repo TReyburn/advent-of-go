@@ -75,3 +75,12 @@ func TestLiFoQueue_BulkPush(t *testing.T) {
 
 	assert.Equal(t, 2, len(q.Items))
 }
+
+func TestAdapter_BFSSummarize(t *testing.T) {
+	ns := []int{16, 10, 15, 5, 1, 11, 7, 19, 6, 12, 4}
+	a := NewAdapter()
+	a.Load(ns)
+
+	res := a.BFSSummarize()
+	assert.Equal(t, 8, res)
+}
