@@ -1,5 +1,5 @@
-##--- Day 9: Encoding Error ---
-###--- Part One ---
+## --- Day 9: Encoding Error ---
+### --- Part One ---
 With your neighbor happily enjoying their video game, you turn your attention to an open data port on the little screen in the seat in front of you.
 
 Though the port is non-standard, you manage to connect it to your computer through the clever use of several paperclips. Upon connection, the port outputs a series of numbers (your puzzle input).
@@ -48,7 +48,7 @@ In this example, after the 5-number preamble, almost every number is the sum of 
 
 The first step of attacking the weakness in the XMAS data is to find the first number in the list (after the preamble) which is not the sum of two of the 25 numbers before it. What is the first number that does not have this property?
 
-###--- Part Two ---
+### --- Part Two ---
 The final step in breaking the XMAS encryption relies on the invalid number you just found: you must find a contiguous set of at least two numbers in your list which sum to the invalid number from step 1.
 
 Again consider the above example:
